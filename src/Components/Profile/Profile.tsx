@@ -13,9 +13,9 @@ export const Profile: React.FC<ProfileType> = (props) => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts    id={props.id}
-                        message={props.message}
-                        count={props.count}/>
+            <MyPosts id={props.id}
+                     message={props.message}
+                     count={props.count}/>
         </div>
     )
 }
