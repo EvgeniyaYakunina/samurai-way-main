@@ -5,23 +5,23 @@ import {Navbar} from "./Components/Navbar/Navbar";
 import {Profile} from "./Components/Profile/Profile";
 import {Dialogs} from "./Components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
-import {RootStateType} from "./redux/state";
+import {addPost, RootStateType} from "./redux/state";
 import {state} from "./redux/state";
 
 export type AppPropsType= {
     state: RootStateType;
+    addPost: (postMessage: string)=> void
 }
  const App:React.FC<AppPropsType> =(props)=> {
-     const {state,...restProps}=props
+     const {state,addPost,...restProps}=props
     return (
-        <BrowserRouter>
             <div className='app-wrapper'>
                 <Header/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
 
-                    <Route  path='/dialogs' render={()=> <Dialogs state={state.dialogsPages}/>}/>
-                    <Route path='/profile' render={()=> <Profile state={state.profilePage}/>}/>
+                    <Route  path='/dialogs' render={()=> <Dialogs state={state.dialogsPages} addPost={addPost}/>}/>
+                    <Route path='/profile' render={()=> <Profile state={state.profilePage} addPost={addPost}/>}/>
                     {/*<Route path='/news' component={News}/>*/}
                     {/*<Route path='/music' component={Music}/>*/}
                     {/*<Route path='/settings' component={Settings}/>*/}
@@ -29,7 +29,6 @@ export type AppPropsType= {
                 </div>
 
             </div>
-        </BrowserRouter>
     );
 }
 
