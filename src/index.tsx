@@ -5,12 +5,16 @@ import App from './App';
 import {state} from "./redux/state";
 import {addPost} from "./redux/state";
 import {BrowserRouter} from "react-router-dom";
+import {rerenderEntireThree} from "./render";
 
 addPost("SamuraiJS")
 
-ReactDOM.render(
-    <BrowserRouter>
-        <App state={state} addPost={addPost}/>
-    </BrowserRouter>,
-  document.getElementById('root')
-);
+// export const rerenderEntireThree =()=> {
+//     ReactDOM.render(
+//         <BrowserRouter>
+//             <App state={state} addPost={addPost}/>
+//         </BrowserRouter>,
+//         document.getElementById('root')
+//     );
+// }
+rerenderEntireThree(state);

@@ -1,3 +1,5 @@
+import {rerenderEntireThree} from "../render";
+
 type MessagesType={
     id: number
     message: string
@@ -56,4 +58,5 @@ export let addPost = (postMessage: string)=>{
         count: 0
     };
     state.profilePage.posts.push(newPost);
+    rerenderEntireThree(state);
 }

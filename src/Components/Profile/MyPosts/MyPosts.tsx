@@ -22,7 +22,8 @@ export const MyPosts: React.FC<MyPostsType> = (props) => {
 
     const addFirstPost =()=>{
         if(newPostElement.current !== null){
-            addPost(newPostElement.current.value)
+            addPost(newPostElement.current.value);
+            newPostElement.current.value = '';
         }
     }
 
