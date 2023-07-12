@@ -8,13 +8,14 @@ type DialogType={
     id: number
     name: string
 }
-type PostType={
+export type PostType={
     id: number
     message: string
     count: number
 }
 export type ProfilePageType={
     posts: Array<PostType>
+    newPostText: string
 }
 export type DialogPageType={
     dialogs: Array<DialogType>
@@ -31,6 +32,7 @@ export const state: RootStateType = {
             {id: 0, message: "Hey, how are you", count: 15},
             {id: 1, message: "It is my first post", count: 20},
         ],
+        newPostText: "it-Kamasutra.com"
     },
     dialogsPages: {
         dialogs: [
@@ -51,12 +53,17 @@ export const state: RootStateType = {
     },
 }
 
-export let addPost = (postMessage: string)=>{
+export let addPost = ()=>{
     let newPost ={
         id:5,
-        message: postMessage,
+        message: state.profilePage.newPostText,
         count: 0
     };
     state.profilePage.posts.push(newPost);
+    state.profilePage.newPostText = '';
+    rerenderEntireThree(state);
+}
+export let updateNewPostText = (newText: string)=>{
+    state.profilePage.newPostText = (newText);
     rerenderEntireThree(state);
 }
