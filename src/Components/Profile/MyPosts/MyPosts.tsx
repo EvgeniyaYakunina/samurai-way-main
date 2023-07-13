@@ -1,4 +1,4 @@
-import React, {MouseEventHandler, RefObject, useRef} from "react";
+import React, {ChangeEvent, MouseEventHandler, RefObject, useRef} from "react";
 import s from './MyPosts.module.css'
 import {Post} from "./Post/Post";
 import { ProfileType} from "../Profile";
@@ -13,26 +13,15 @@ type MyPostsType={
 
 export const MyPosts: React.FC<MyPostsType> = (props) => {
     const {posts,addPost,newPostText, updateNewPostText,...restProps}=props
-    // let posts=[
-    //     {id: 0, message: "Hey, how are you", count: 15},
-    //     {id: 1, message: "It is my first post", count: 20},
-    // ]
 
-    let postsElements = posts.map(p=> <Post message={p.message} count={p.count}/>)
-
-    let newPostElement = useRef<HTMLTextAreaElement>(null);
-    // let newPostElement = React.createRef<HTMLTextAreaElement>();
+    let postsElements = posts.map(p=> <div key={p.id}><Post message={p.message} count={p.count}/></div>)
 
     const addFirstPost =()=>{
-        // if(newPostElement.current !== null){
             addPost();
-        // }
     }
 
-    const onPostChange=()=>{
-        if(newPostElement.current !== null) {
-            updateNewPostText(newPostElement.current.value);
-        }
+    const onPostChange=(e: ChangeEvent<HTMLTextAreaElement>)=>{
+        updateNewPostText(e.currentTarget.value);
     }
 
 
@@ -43,7 +32,7 @@ export const MyPosts: React.FC<MyPostsType> = (props) => {
             </div>
             <div>
                 <div>
-                    <textarea ref={newPostElement} onChange={onPostChange} value={newPostText}/>
+                    <textarea onChange={onPostChange} value={newPostText}/>
                 </div>
                 <div>
                     <button onClick={addFirstPost}>Add post</button>
