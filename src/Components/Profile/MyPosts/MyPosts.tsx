@@ -2,26 +2,32 @@ import React, {ChangeEvent, MouseEventHandler, RefObject, useRef} from "react";
 import s from './MyPosts.module.css'
 import {Post} from "./Post/Post";
 import { ProfileType} from "../Profile";
-import {PostType} from "../../../redux/state";
+import {ActionsTypes, PostType} from "../../../redux/state";
+import {message} from "antd";
 
 type MyPostsType={
     posts:Array<PostType>
     newPostText: string
-    addPost: ()=> void
-    updateNewPostText: (newText: string)=> void
+    dispatch: (action: ActionsTypes)=> void
+    // addPost: (postMessage: string)=> void
+    // updateNewPostText: (newText: string)=> void
 }
 
 export const MyPosts: React.FC<MyPostsType> = (props) => {
-    const {posts,addPost,newPostText, updateNewPostText,...restProps}=props
+    const {posts,newPostText,
+        // addPost, updateNewPostText,
+        dispatch,...restProps}=props
 
     let postsElements = posts.map(p=> <div key={p.id}><Post message={p.message} count={p.count}/></div>)
 
     const addFirstPost =()=>{
-            addPost();
+            // addPost(newPostText);
+        dispatch({type: 'ADD-POST', newPostText: newPostText})
     }
 
     const onPostChange=(e: ChangeEvent<HTMLTextAreaElement>)=>{
-        updateNewPostText(e.currentTarget.value);
+        // updateNewPostText(e.currentTarget.value);
+        dispatch({type: 'UPDATE-NEW-POST-TEXT', newText: e.currentTarget.value})
     }
 
 

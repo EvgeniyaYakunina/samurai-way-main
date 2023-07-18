@@ -2,11 +2,12 @@ import React, {useRef} from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-import {DialogPageType, state} from "../../redux/state";
+import {DialogPageType, StoreType} from "../../redux/state";
 
 export type DialogsProps={
-    state: DialogPageType
-    addPost: (postMessage: string)=> void
+    // state: StoreType
+    dialogsPages: DialogPageType
+    // addPost: (postMessage: string)=> void
 }
 // export type DialogsType={
 //     id: number
@@ -18,9 +19,10 @@ export type DialogsProps={
 // }
 
 export const Dialogs:React.FC<DialogsProps> = (props) => {
-    const {...restProps}=props
-    let dialogsElements = state.dialogsPages.dialogs.map(d =><DialogItem name= {d.name} id ={d.id}/>);
-    let messagesElements = state.dialogsPages.messages.map(m => <Message message={m.message} id={m.id}/>)
+    const {dialogsPages,...restProps}=props
+
+    let dialogsElements = dialogsPages.dialogs.map(d =><div key={d.id}><DialogItem name= {d.name} id ={d.id}/></div>);
+    let messagesElements = dialogsPages.messages.map(m => <div key={m.id}><Message message={m.message} id={m.id}/></div>)
 
     let newMessageElements = useRef<HTMLTextAreaElement>(null);
 
