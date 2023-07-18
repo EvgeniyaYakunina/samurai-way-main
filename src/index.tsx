@@ -9,9 +9,7 @@ import {store} from "./redux/state"
 const rerenderEntireThree = () => {
     ReactDOM.render(
         <BrowserRouter>
-            <App store={store}
-                // state = {state} addPost = {store.addPost.bind(store)} updateNewPostText={store.updateNewPostText.bind(store)}
-            />
+            <App store={store}/>
         </BrowserRouter>,
         document.getElementById('root'));
 }

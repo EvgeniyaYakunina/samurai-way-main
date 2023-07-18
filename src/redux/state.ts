@@ -27,24 +27,29 @@ export type RootStateType = {
 export type StoreType={
     _state: RootStateType
     _rerenderEntireThree:()=>void
-    // addPost: ()=> void
-    // updateNewPostText:(newText: string)=> void
     dispatch: (action: ActionsTypes)=> void
     subscribe: (observer: ()=>void)=> void
     getState: ()=> RootStateType
 }
 
-type AddPostActionType ={
-    type: 'ADD-POST'
-    newPostText: string
-}
 
-type UpdateNewPostText ={
-    type: 'UPDATE-NEW-POST-TEXT'
-    newText: string
-}
+type AddPostActionType = ReturnType<typeof addPostAC>
+type UpdateNewPostText = ReturnType<typeof updateNewPostTextAC>
 
 export type ActionsTypes =  AddPostActionType | UpdateNewPostText
+
+export const addPostAC = (newPost: string) => {
+    return {
+        type: 'ADD-POST',
+        newPostText: newPost
+    }as const
+}
+export  const updateNewPostTextAC = (newText: string) => {
+    return {
+        type: 'UPDATE-NEW-POST-TEXT',
+        newText: newText
+    } as const
+}
 
 export const store: StoreType ={
     _state: {
@@ -76,20 +81,6 @@ export const store: StoreType ={
     _rerenderEntireThree(){
         console.log('State changed')
     },
-    // addPost (){
-    //     const newPost ={
-    //         id:5,
-    //         message: this._state.profilePage.newPostText,
-    //         count: 0
-    //     };
-    //     this._state.profilePage.posts.push(newPost);
-    //     this._state.profilePage.newPostText = '';
-    //     this._rerenderEntireThree();
-    // },
-    // updateNewPostText  (newText: string){
-    //     this._state.profilePage.newPostText = (newText);
-    //     this._rerenderEntireThree();
-    // },
     dispatch(action){
         if(action.type === 'ADD-POST'){
             const newPost ={

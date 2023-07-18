@@ -20,11 +20,7 @@ export type PostsType={
 }
 
 export const Profile: React.FC<PostsType> = (props) => {
-    const {profilePage,
-        // updateNewPostText,addPost,
-        dispatch,
-        // newPostText,
-        ...restProps}=props
+    const {profilePage, dispatch, ...restProps}=props
 
     return (
         <div>
