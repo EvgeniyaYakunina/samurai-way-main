@@ -1,3 +1,6 @@
+import {AddPostActionType, profileReducer, UpdateNewPostText,} from "./profileReducer";
+import {dialogReducer, SendMessage, UpdateNewMessageBody} from "./dialogsReducer";
+
 type MessagesType={
     id: number
     message: string
@@ -35,34 +38,34 @@ export type StoreType={
 }
 
 
-type AddPostActionType = ReturnType<typeof addPostAC>
-type UpdateNewPostText = ReturnType<typeof updateNewPostTextAC>
-type UpdateNewMessageBody= ReturnType<typeof updateNewMessageBodyAC>
-type SendMessage = ReturnType<typeof sendMessageAC>
+// type AddPostActionType = ReturnType<typeof addPostAC>
+// type UpdateNewPostText = ReturnType<typeof updateNewPostTextAC>
+// type UpdateNewMessageBody= ReturnType<typeof updateNewMessageBodyAC>
+// type SendMessage = ReturnType<typeof sendMessageAC>
 
 export type ActionsTypes =  AddPostActionType | UpdateNewPostText | UpdateNewMessageBody | SendMessage
 
-export const addPostAC = (newPost: string) => ({
-        type: 'ADD-POST',
-        newPostText: newPost
-})as const
-export  const updateNewPostTextAC = (newText: string) => {
-    return {
-        type: 'UPDATE-NEW-POST-TEXT',
-        newText: newText
-    } as const
-}
-export  const updateNewMessageBodyAC = (body: string) => {
-    return {
-        type: 'UPDATE-NEW-MESSAGE-BODY',
-        body: body
-    } as const
-}
-export  const sendMessageAC = () => {
-    return {
-        type: 'SEND-MESSAGE',
-    } as const
-}
+// export const addPostAC = (newPost: string) => ({
+//         type: 'ADD-POST',
+//         newPostText: newPost
+// })as const
+// export  const updateNewPostTextAC = (newText: string) => {
+//     return {
+//         type: 'UPDATE-NEW-POST-TEXT',
+//         newText: newText
+//     } as const
+// }
+// export  const updateNewMessageBodyAC = (body: string) => {
+//     return {
+//         type: 'UPDATE-NEW-MESSAGE-BODY',
+//         body: body
+//     } as const
+// }
+// export  const sendMessageAC = () => {
+//     return {
+//         type: 'SEND-MESSAGE',
+//     } as const
+// }
 
 export const store: StoreType ={
     _state: {
@@ -96,28 +99,32 @@ export const store: StoreType ={
         console.log('State changed')
     },
     dispatch(action){
-        if(action.type === 'ADD-POST'){
-            const newPost ={
-                id:5,
-                message: this._state.profilePage.newPostText,
-                // action.newPostText,
-                count: 0
-            };
-            this._state.profilePage.posts.push(newPost);
-            this._state.profilePage.newPostText = '';
-            this._rerenderEntireThree();
-        }else  if (action.type === 'UPDATE-NEW-POST-TEXT'){
-            this._state.profilePage.newPostText = action.newText;
-            this._rerenderEntireThree();
-        }else if (action.type === 'UPDATE-NEW-MESSAGE-BODY'){
-            this._state.dialogsPages.newMessageBody = action.body;
-            this._rerenderEntireThree();
-        }else if (action.type === 'SEND-MESSAGE'){
-            let body = this._state.dialogsPages.newMessageBody;
-            this._state.dialogsPages.newMessageBody = '';
-            this._state.dialogsPages.messages.push({id: 6, message: body});
-            this._rerenderEntireThree();
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.dialogsPages = dialogReducer(this._state.dialogsPages, action);
+        this._rerenderEntireThree();
+
+        // if(action.type === 'ADD-POST'){
+        //     const newPost ={
+        //         id:5,
+        //         message: this._state.profilePage.newPostText,
+        //         // action.newPostText,
+        //         count: 0
+        //     };
+        //     this._state.profilePage.posts.push(newPost);
+        //     this._state.profilePage.newPostText = '';
+        //     this._rerenderEntireThree();
+        // }else  if (action.type === 'UPDATE-NEW-POST-TEXT'){
+        //     this._state.profilePage.newPostText = action.newText;
+        //     this._rerenderEntireThree();
+        // }else if (action.type === 'UPDATE-NEW-MESSAGE-BODY'){
+        //     this._state.dialogsPages.newMessageBody = action.body;
+        //     this._rerenderEntireThree();
+        // }else if (action.type === 'SEND-MESSAGE'){
+        //     let body = this._state.dialogsPages.newMessageBody;
+        //     this._state.dialogsPages.newMessageBody = '';
+        //     this._state.dialogsPages.messages.push({id: 6, message: body});
+        //     this._rerenderEntireThree();
+        // }
     },
 
     subscribe (observer) {

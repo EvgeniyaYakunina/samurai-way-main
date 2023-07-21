@@ -2,8 +2,9 @@ import React, {ChangeEvent, MouseEventHandler, RefObject, useRef} from "react";
 import s from './MyPosts.module.css'
 import {Post} from "./Post/Post";
 import { ProfileType} from "../Profile";
-import {ActionsTypes, addPostAC, PostType, updateNewPostTextAC} from "../../../redux/state";
+import {addPostAC, updateNewPostTextAC} from "../../../redux/profileReducer";
 import {message} from "antd";
+import {ActionsTypes, PostType} from "../../../redux/state";
 
 type MyPostsType={
     posts:Array<PostType>
