@@ -18,6 +18,8 @@ export type ProfilePageType={
 export type DialogPageType={
     dialogs: Array<DialogType>
     messages: Array<MessagesType>
+    newMessageBody: string
+
 }
 export type RootStateType = {
     profilePage: ProfilePageType
@@ -35,19 +37,30 @@ export type StoreType={
 
 type AddPostActionType = ReturnType<typeof addPostAC>
 type UpdateNewPostText = ReturnType<typeof updateNewPostTextAC>
+type UpdateNewMessageBody= ReturnType<typeof updateNewMessageBodyAC>
+type SendMessage = ReturnType<typeof sendMessageAC>
 
-export type ActionsTypes =  AddPostActionType | UpdateNewPostText
+export type ActionsTypes =  AddPostActionType | UpdateNewPostText | UpdateNewMessageBody | SendMessage
 
-export const addPostAC = (newPost: string) => {
-    return {
+export const addPostAC = (newPost: string) => ({
         type: 'ADD-POST',
         newPostText: newPost
-    }as const
-}
+})as const
 export  const updateNewPostTextAC = (newText: string) => {
     return {
         type: 'UPDATE-NEW-POST-TEXT',
         newText: newText
+    } as const
+}
+export  const updateNewMessageBodyAC = (body: string) => {
+    return {
+        type: 'UPDATE-NEW-MESSAGE-BODY',
+        body: body
+    } as const
+}
+export  const sendMessageAC = () => {
+    return {
+        type: 'SEND-MESSAGE',
     } as const
 }
 
@@ -75,7 +88,8 @@ export const store: StoreType ={
                 {id: 3, message: "Yo"},
                 {id: 4, message: "Yo"},
                 {id: 5, message: "Yo"},
-            ]
+            ],
+            newMessageBody: ""
         },
     },
     _rerenderEntireThree(){
@@ -94,6 +108,14 @@ export const store: StoreType ={
             this._rerenderEntireThree();
         }else  if (action.type === 'UPDATE-NEW-POST-TEXT'){
             this._state.profilePage.newPostText = action.newText;
+            this._rerenderEntireThree();
+        }else if (action.type === 'UPDATE-NEW-MESSAGE-BODY'){
+            this._state.dialogsPages.newMessageBody = action.body;
+            this._rerenderEntireThree();
+        }else if (action.type === 'SEND-MESSAGE'){
+            let body = this._state.dialogsPages.newMessageBody;
+            this._state.dialogsPages.newMessageBody = '';
+            this._state.dialogsPages.messages.push({id: 6, message: body});
             this._rerenderEntireThree();
         }
     },
