@@ -1,32 +1,28 @@
-import React, {ChangeEvent, MouseEventHandler, RefObject, useRef} from "react";
+import React, {ChangeEvent} from "react";
 import s from './MyPosts.module.css'
 import {Post} from "./Post/Post";
-import { ProfileType} from "../Profile";
-import {addPostAC, updateNewPostTextAC} from "../../../redux/profileReducer";
-import {message} from "antd";
-import {ActionsTypes, PostType} from "../../../redux/state";
+import {PostType} from "../../../redux/redux-store";
 
 type MyPostsType={
     posts:Array<PostType>
     newPostText: string
-    dispatch: (action: ActionsTypes)=> void
-    // addPost: (postMessage: string)=> void
-    // updateNewPostText: (newText: string)=> void
+    addPost: (postMessage: string)=> void
+    updateNewPostText: (newText: string)=> void
 }
 
 export const MyPosts: React.FC<MyPostsType> = (props) => {
-    const {posts,newPostText, dispatch,...restProps}=props
+    const {posts,newPostText, addPost, updateNewPostText,...restProps}=props
 
     let postsElements = posts.map(p=> <div key={p.id}><Post message={p.message} count={p.count}/></div>)
 
-    const addFirstPost =()=>{
-            // addPost(newPostText);
-        dispatch(addPostAC(newPostText))
+    const onAddPost =()=>{
+            addPost(newPostText);
+        // dispatch(addPostAC(newPostText))
     }
 
     const onPostChange=(e: ChangeEvent<HTMLTextAreaElement>)=>{
-        // updateNewPostText(e.currentTarget.value);
-        dispatch(updateNewPostTextAC(e.currentTarget.value))
+        updateNewPostText(e.currentTarget.value);
+        // dispatch(updateNewPostTextAC(e.currentTarget.value))
     }
 
 
@@ -40,7 +36,7 @@ export const MyPosts: React.FC<MyPostsType> = (props) => {
                     <textarea onChange={onPostChange} value={newPostText}/>
                 </div>
                 <div>
-                    <button onClick={addFirstPost}>Add post</button>
+                    <button onClick={onAddPost}>Add post</button>
                 </div>
             </div>
             <div className={s.posts}>
