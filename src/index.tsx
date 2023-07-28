@@ -4,12 +4,17 @@ import './index.css';
 import App from './App';
 import {BrowserRouter} from "react-router-dom";
 import {store} from "./redux/redux-store"
+import {Provider, StoreContext} from "./StoreContext";
 
 
 const rerenderEntireThree = () => {
     ReactDOM.render(
         <BrowserRouter>
-            <App store={store}/>
+            <Provider store={store}>
+            <App
+                // store={store}
+            />
+            </Provider>
         </BrowserRouter>,
         document.getElementById('root'));
 }

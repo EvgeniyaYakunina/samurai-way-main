@@ -8,22 +8,28 @@ import {DialogsContainer} from "./Components/Dialogs/DialogsContainer";
 import {StoreType} from "./redux/redux-store";
 
 export type AppPropsType= {
-    store: StoreType
+    // store: StoreType
 }
  const App:React.FC<AppPropsType> =(props)=> {
-     const {store, ...restProps}=props
+     const {
+         // store,
+         ...restProps}=props
 
-     const  state = store.getState();
+     // const  state = store.getState();
 
-     console.log(state.dialogsPages)
+     // console.log(state.dialogsPages)
     return (
             <div className='app-wrapper'>
                 <Header/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
 
-                    <Route  path='/dialogs' render={()=> <DialogsContainer store={store}/>}/>
-                    <Route path='/profile' render={()=> <Profile store={store}/>}/>
+                    <Route  path='/dialogs' render={()=> <DialogsContainer/> }
+                        // store={store}/>}
+                    />
+                    <Route path='/profile' render={()=> <Profile/> }
+                        // store={store}/>}
+                    />
                     {/*<Route path='/news' component={News}/>*/}
                     {/*<Route path='/music' component={Music}/>*/}
                     {/*<Route path='/settings' component={Settings}/>*/}
