@@ -2,21 +2,22 @@ import React, {ChangeEvent} from "react";
 import s from './MyPosts.module.css'
 import {Post} from "./Post/Post";
 import {PostType} from "../../../redux/redux-store";
+import {MyPostsPropsType} from "./MyPostsContainer";
 
-type MyPostsType={
-    posts:Array<PostType>
-    newPostText: string
-    addPost: (postMessage: string)=> void
-    updateNewPostText: (newText: string)=> void
-}
+// type MyPostsPropsType={
+//     posts:Array<PostType>
+//     newPostText: string
+//     addPost: (postMessage: string)=> void
+//     updateNewPostText: (newText: string)=> void
+// }
 
-export const MyPosts: React.FC<MyPostsType> = (props) => {
-    const {posts,newPostText, addPost, updateNewPostText,...restProps}=props
+export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
+    const {profilePage, addPost, updateNewPostText,...restProps}=props
 
-    let postsElements = posts.map(p=> <div key={p.id}><Post message={p.message} count={p.count}/></div>)
-
+    let postsElements = profilePage.posts.map(p=> <div key={p.id}><Post message={p.message} count={p.count}/></div>)
+    let newPostText = profilePage.newPostText
     const onAddPost =()=>{
-            addPost(newPostText);
+            addPost();
         // dispatch(addPostAC(newPostText))
     }
 

@@ -31,6 +31,7 @@ export type RootStateType = {
     dialogsPages: DialogPageType
     sidebar: object
 }
+
 export type StoreType={
     _state: RootStateType
     _rerenderEntireThree:()=>void
@@ -38,13 +39,15 @@ export type StoreType={
     subscribe: (observer: ()=>void)=> void
     getState: ()=> RootStateType
 }
-
 export type ActionsTypes =  AddPostActionType | UpdateNewPostText | UpdateNewMessageBody | SendMessage
 
-let reducers = combineReducers({
+ let rootReducer = combineReducers({
     profilePage: profileReducer,
     dialogsPages: dialogReducer,
     sidebar: sidebarReducer
 });
 
-export let store: StoreType = createStore(reducers);
+
+export type AppStateType = ReturnType<typeof rootReducer>
+
+export const store = createStore(rootReducer)
