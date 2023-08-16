@@ -2,6 +2,10 @@ import {combineReducers, createStore} from "redux";
 import {AddPostActionType, profileReducer, UpdateNewPostText} from "./profileReducer";
 import {dialogReducer, SendMessage, UpdateNewMessageBody} from "./dialogsReducer";
 import {sidebarReducer} from "./sidebarReducer";
+import {follow, followAC, setUsers, setUsersAC, unfollow, unfollowAC, usersReducer} from "./usersReducer";
+
+export type ActionsTypes =  AddPostActionType | UpdateNewPostText | UpdateNewMessageBody | SendMessage |
+    follow | unfollow | setUsers
 
 type MessagesType={
     id: number
@@ -32,6 +36,7 @@ export type RootStateType = {
     sidebar: object
 }
 
+
 export type StoreType={
     _state: RootStateType
     _rerenderEntireThree:()=>void
@@ -39,12 +44,13 @@ export type StoreType={
     subscribe: (observer: ()=>void)=> void
     getState: ()=> RootStateType
 }
-export type ActionsTypes =  AddPostActionType | UpdateNewPostText | UpdateNewMessageBody | SendMessage
+
 
  let rootReducer = combineReducers({
-    profilePage: profileReducer,
-    dialogsPages: dialogReducer,
-    sidebar: sidebarReducer
+     profilePage: profileReducer,
+     dialogsPages: dialogReducer,
+     usersPage: usersReducer,
+     sidebar: sidebarReducer
 });
 
 

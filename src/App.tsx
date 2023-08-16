@@ -6,6 +6,8 @@ import {Profile} from "./Components/Profile/Profile";
 import { Route} from "react-router-dom";
 import {DialogsContainer} from "./Components/Dialogs/DialogsContainer";
 import {StoreType} from "./redux/redux-store";
+import {Users} from "./Components/Users/Users";
+import {UsersContainer} from "./Components/Users/UsersContainer";
 
 export type AppPropsType= {
     // store: StoreType
@@ -30,6 +32,7 @@ export type AppPropsType= {
                     <Route path='/profile' render={()=> <Profile/> }
                         // store={store}/>}
                     />
+                    <Route path='/users' render={()=> <UsersContainer/>}/>
                     {/*<Route path='/news' component={News}/>*/}
                     {/*<Route path='/music' component={Music}/>*/}
                     {/*<Route path='/settings' component={Settings}/>*/}
