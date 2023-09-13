@@ -2,19 +2,10 @@ import {combineReducers, createStore} from "redux";
 import {AddPostActionType, profileReducer, UpdateNewPostText} from "./profileReducer";
 import {dialogReducer, SendMessage, UpdateNewMessageBody} from "./dialogsReducer";
 import {sidebarReducer} from "./sidebarReducer";
-import {
-    follow,
-    followAC,
-    setCurrentPage, setTotalUsersCount,
-    setUsers,
-    setUsersAC,
-    unfollow,
-    unfollowAC,
-    usersReducer
-} from "./usersReducer";
+import {follow, setCurrentPage, setTotalUsersCount, setUsers, toggleIsFetching, unfollow, usersReducer} from "./usersReducer";
 
 export type ActionsTypes =  AddPostActionType | UpdateNewPostText | UpdateNewMessageBody | SendMessage |
-    follow | unfollow | setUsers | setCurrentPage | setTotalUsersCount
+    follow | unfollow | setUsers | setCurrentPage | setTotalUsersCount | toggleIsFetching
 
 type MessagesType={
     id: number
