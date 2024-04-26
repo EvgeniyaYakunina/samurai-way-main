@@ -2,18 +2,17 @@ import React from 'react';
 import './App.css';
 import {Header} from "./Components/Header/Header";
 import {Navbar} from "./Components/Navbar/Navbar";
-import {Profile} from "./Components/Profile/Profile";
 import { Route} from "react-router-dom";
 import {DialogsContainer} from "./Components/Dialogs/DialogsContainer";
-import {StoreType} from "./redux/redux-store";
 import {UsersContainer} from "./Components/Users/UsersContainer";
+import ProfileContainer from "./Components/Profile/ProfileContainer";
+import HeaderContainer from "./Components/Header/HeaderContainer";
 
 export type AppPropsType= {
     // store: StoreType
 }
  const App:React.FC<AppPropsType> =(props)=> {
      const {
-         // store,
          ...restProps}=props
 
      // const  state = store.getState();
@@ -21,16 +20,12 @@ export type AppPropsType= {
      // console.log(state.dialogsPages)
     return (
             <div className='app-wrapper'>
-                <Header/>
+                <HeaderContainer/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
 
-                    <Route  path='/dialogs' render={()=> <DialogsContainer/> }
-                        // store={store}/>}
-                    />
-                    <Route path='/profile' render={()=> <Profile/> }
-                        // store={store}/>}
-                    />
+                    <Route  path='/dialogs' render={()=> <DialogsContainer/> }/>
+                    <Route path='/profile/:userId?' render={()=> <ProfileContainer/> }/>
                     <Route path='/users' render={()=> <UsersContainer/>}/>
                     {/*<Route path='/news' component={News}/>*/}
                     {/*<Route path='/music' component={Music}/>*/}

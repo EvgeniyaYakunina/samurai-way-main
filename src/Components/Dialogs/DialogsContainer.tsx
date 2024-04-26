@@ -3,7 +3,7 @@ import {
     InitialStateDialogsType,
     sendMessageAC,
     updateNewMessageBodyAC
-} from "../../redux/dialogsReducer";
+} from "../../redux/dialogs-reducer";
 import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";

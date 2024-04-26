@@ -1,11 +1,22 @@
 import {combineReducers, createStore} from "redux";
-import {AddPostActionType, profileReducer, UpdateNewPostText} from "./profileReducer";
-import {dialogReducer, SendMessage, UpdateNewMessageBody} from "./dialogsReducer";
-import {sidebarReducer} from "./sidebarReducer";
-import {follow, setCurrentPage, setTotalUsersCount, setUsers, toggleIsFetching, unfollow, usersReducer} from "./usersReducer";
+import {AddPostActionType, profileReducer, setUserProfile, UpdateNewPostText} from "./profile-reducer";
+import {dialogReducer, SendMessage, UpdateNewMessageBody} from "./dialogs-reducer";
+import {sidebarReducer} from "./sidebar-reducer";
+import {
+    follow,
+    followingInProgress,
+    setCurrentPage,
+    setTotalUsersCount,
+    setUsers,
+    toggleIsFetching,
+    unfollow,
+    usersReducer
+} from "./users-reducer";
+import {authReducer, SetUserData} from "./auth-reducer";
 
 export type ActionsTypes =  AddPostActionType | UpdateNewPostText | UpdateNewMessageBody | SendMessage |
-    follow | unfollow | setUsers | setCurrentPage | setTotalUsersCount | toggleIsFetching
+    follow | unfollow | setUsers | setCurrentPage | setTotalUsersCount | toggleIsFetching | setUserProfile |SetUserData
+    | followingInProgress
 
 type MessagesType={
     id: number
@@ -50,7 +61,8 @@ export type StoreType={
      profilePage: profileReducer,
      dialogsPages: dialogReducer,
      usersPage: usersReducer,
-     sidebar: sidebarReducer
+     sidebar: sidebarReducer,
+     auth: authReducer
 });
 
 
