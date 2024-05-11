@@ -39,9 +39,9 @@ export type UsersPropsType = MapStateUsersType & MapStateDispatchUsersType
 
 class UsersContainerComponent extends React.Component<UsersPropsType> {
 
-    constructor(props: UsersPropsType) {
-        super(props);
-    }
+    // constructor(props: UsersPropsType) {
+    //     super(props);
+    // }
     componentDidMount() {
         this.props.toggleIsFetching(true);
         usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
@@ -69,7 +69,7 @@ class UsersContainerComponent extends React.Component<UsersPropsType> {
         <Users totalUsersCount={this.props.totalUsersCount}
                       pageSize={this.props.pageSize}
                       currentPage={this.props.currentPage}
-                      follow={this.props.follow}
+                       follow={this.props.follow}
                       unfollow={this.props.unfollow}
                       onPageChanged={this.onPageChanged}
                       usersPage={this.props.usersPage}
