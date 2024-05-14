@@ -1,4 +1,7 @@
 import {ActionsTypes} from "./redux-store";
+import {Dispatch} from "redux";
+import {usersAPI} from "../api/api";
+import {setTotalUsersCount, setUsers, toggleIsFetching} from "./users-reducer";
 
 export type PostType={
     id: number
@@ -78,5 +81,14 @@ export const addPostAC = (newPost?: string) =>
     ({type: 'ADD-POST', newPostText: newPost})as const
 export  const updateNewPostTextAC = (newText: string) => {
     return {type: 'UPDATE-NEW-POST-TEXT', newText: newText} as const}
-export  const setUserProfile = (profile: ProfileType) => {
+const setUserProfile = (profile: ProfileType) => {
     return {type: 'SET_USER_PROFILE', profile} as const}
+
+export const getUserProfileTC=(userId: number)=>{
+    return (dispatch: Dispatch)=>{
+        usersAPI.getProfile(userId)
+            .then(response => {
+               dispatch(setUserProfile(response.data))
+            });
+    }
+}
