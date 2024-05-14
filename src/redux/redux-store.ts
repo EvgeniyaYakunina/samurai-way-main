@@ -1,21 +1,33 @@
-import {combineReducers, createStore} from "redux";
+import {applyMiddleware, combineReducers, createStore} from "redux";
 import {AddPostActionType, profileReducer, setUserProfile, UpdateNewPostText} from "./profile-reducer";
 import {dialogReducer, SendMessage, UpdateNewMessageBody} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar-reducer";
 import {
-    follow,
+    followSuccess,
     followingInProgress,
     setCurrentPage,
     setTotalUsersCount,
     setUsers,
     toggleIsFetching,
-    unfollow,
+    unfollowSuccess,
     usersReducer
 } from "./users-reducer";
 import {authReducer, SetUserData} from "./auth-reducer";
+import thunkMiddleware from "redux-thunk";
 
-export type ActionsTypes =  AddPostActionType | UpdateNewPostText | UpdateNewMessageBody | SendMessage |
-    follow | unfollow | setUsers | setCurrentPage | setTotalUsersCount | toggleIsFetching | setUserProfile |SetUserData
+export type ActionsTypes =
+    |AddPostActionType
+    | UpdateNewPostText
+    | UpdateNewMessageBody
+    | SendMessage
+    | followSuccess
+    | unfollowSuccess
+    | setUsers
+    | setCurrentPage
+    | setTotalUsersCount
+    | toggleIsFetching
+    | setUserProfile
+    |SetUserData
     | followingInProgress
 
 type MessagesType={
@@ -68,6 +80,6 @@ export type StoreType={
 
 export type AppStateType = ReturnType<typeof rootReducer>
 
-export const store = createStore(rootReducer)
+export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
 
 // window.store = store;
