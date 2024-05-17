@@ -1,4 +1,3 @@
-import React from 'react';
 import {
     InitialStateDialogsType,
     sendMessageAC,
@@ -8,6 +7,7 @@ import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {Dispatch} from "redux";
+import {InitialStateAuthType} from "../../redux/auth-reducer";
 
 
 // export type DialogsContainerProps={
@@ -16,6 +16,7 @@ import {Dispatch} from "redux";
 
 type MapStateDialogsPropsType = {
     dialogsPages: InitialStateDialogsType
+    isAuth: boolean
 }
 
 type MapStateDispatchDialogsPropsType={
@@ -61,9 +62,10 @@ export type DialogsPropsType = MapStateDialogsPropsType & MapStateDispatchDialog
 //     )
 // }
 
-let mapStateToProps = (state: AppStateType): MapStateDialogsPropsType => {
+let mapStateToProps = (state: AppStateType): { dialogsPages: InitialStateDialogsType; isAuth: boolean } => {
     return {
-        dialogsPages: state.dialogsPages
+        dialogsPages: state.dialogsPages,
+        isAuth: state.auth.isAuth
     }
 }
 let mapDispatchToProps = (dispatch: Dispatch): MapStateDispatchDialogsPropsType => {
