@@ -55,6 +55,9 @@ return {
 }
 }
 // let WithUrlDataContainerComponent = withRouter(ProfileContainer);
-export default compose<ComponentType>(connect(mapStateToProps, {getUserProfileTC}), withRouter, withAuthRedirect) (ProfileContainer)
+export default compose<ComponentType>(connect(mapStateToProps, {getUserProfileTC}),
+    withRouter,
+    // withAuthRedirect
+) (ProfileContainer)
 // export default withAuthRedirect(connect(mapStateToProps, {getUserProfileTC}) (WithUrlDataContainerComponent))
 // export default  connect<MapStateProfileType, MapStateDispatchProfileType, {}, AppStateType>(mapStateToProps, {setUserProfile}) (WithUrlDataContainerComponent);
