@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ComponentType} from "react";
 import {Profile} from "./Profile";
 import axios from "axios";
 import {connect} from "react-redux";
@@ -7,6 +7,7 @@ import {getUserProfileTC, ProfileType, setUserProfile} from "../../redux/profile
 import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
 import {usersAPI} from "../../api/api";
 import {withAuthRedirect} from "../../hoc/AuthRedirect";
+import {compose} from "redux";
 
 type PathParamsType={
     userId: string
@@ -53,6 +54,7 @@ return {
  profile: state.profilePage.profile
 }
 }
-let WithUrlDataContainerComponent = withRouter(ProfileContainer);
-export default withAuthRedirect(connect(mapStateToProps, {getUserProfileTC}) (WithUrlDataContainerComponent))
+// let WithUrlDataContainerComponent = withRouter(ProfileContainer);
+export default compose<ComponentType>(connect(mapStateToProps, {getUserProfileTC}), withRouter, withAuthRedirect) (ProfileContainer)
+// export default withAuthRedirect(connect(mapStateToProps, {getUserProfileTC}) (WithUrlDataContainerComponent))
 // export default  connect<MapStateProfileType, MapStateDispatchProfileType, {}, AppStateType>(mapStateToProps, {setUserProfile}) (WithUrlDataContainerComponent);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ComponentType} from "react";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {
@@ -13,6 +13,9 @@ import {
 import {Users} from "./Users";
 import {Preloader} from "../../common/Preloader/Preloader";
 import {usersAPI} from "../../api/api";
+import {compose} from "redux";
+import {withAuthRedirect} from "../../hoc/AuthRedirect";
+import {withRouter} from "react-router-dom";
 
 
 type MapStateUsersType = {
@@ -115,14 +118,16 @@ let mapStateToProps = (state: AppStateType): MapStateUsersType => {
 //         }
 //     }
 // }
-export const UsersContainer = connect (mapStateToProps, {
-    followTC,
-    unfollowTC,
-    // setUsers,
-    setCurrentPage,
-    // setTotalUsersCount,
-    // toggleIsFetching,
-    // toggleFollowingProgress,
-    getUsersThunkCreator
-}
-)(UsersContainerComponent)
+// export const UsersContainer = connect (mapStateToProps, {
+//     followTC,
+//     unfollowTC,
+//     // setUsers,
+//     setCurrentPage,
+//     // setTotalUsersCount,
+//     // toggleIsFetching,
+//     // toggleFollowingProgress,
+//     getUsersThunkCreator
+// }
+// )(UsersContainerComponent)
+export default compose<ComponentType>(connect (mapStateToProps, {
+    followTC, unfollowTC, setCurrentPage, getUsersThunkCreator}),withRouter, withAuthRedirect)(UsersContainerComponent)
