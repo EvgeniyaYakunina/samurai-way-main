@@ -14,6 +14,7 @@ import {
 } from "./users-reducer";
 import {authReducer, SetUserData} from "./auth-reducer";
 import thunkMiddleware from "redux-thunk";
+import {reducer as formReducer} from "redux-form";
 
 export type ActionsTypes =
     |AddPostActionType
@@ -75,7 +76,8 @@ export type StoreType={
      dialogsPages: dialogReducer,
      usersPage: usersReducer,
      sidebar: sidebarReducer,
-     auth: authReducer
+     auth: authReducer,
+     form: formReducer
 });
 
 
