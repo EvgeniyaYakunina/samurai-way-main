@@ -3,6 +3,8 @@ import s from './MyPosts.module.css'
 import {Post} from "./Post/Post";
 import {MyPostsPropsType} from "./MyPostsContainer";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import {maxLengthCreator, required} from "../../../utils/validators";
+import {Textarea} from "../../../common/FormsControls/FormsControls";
 
 export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
     const {profilePage, addPost,...restProps}=props
@@ -29,12 +31,13 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 type AddNewPostFormType={
     newPostText: string
 }
+const maxLength10 = maxLengthCreator(10)
 
 export const AddNewPostForm:React.FC<InjectedFormProps<AddNewPostFormType>> =(props)=> {
     return <div>
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field component={"textarea"} name={"newPostText"}/>
+                <Field component={Textarea} name={"newPostText"} validate={[required,maxLength10]}/>
             </div>
             <div>
                 <button>Add post</button>
