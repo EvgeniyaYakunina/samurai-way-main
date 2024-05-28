@@ -1,6 +1,6 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
 import {AddPostActionType, profileReducer, setStatus, setUserProfile, UpdateNewPostText} from "./profile-reducer";
-import {dialogReducer, SendMessage, UpdateNewMessageBody} from "./dialogs-reducer";
+import {dialogReducer, SendMessage} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar-reducer";
 import {
     followSuccess,
@@ -19,7 +19,7 @@ import {reducer as formReducer} from "redux-form";
 export type ActionsTypes =
     |AddPostActionType
     | UpdateNewPostText
-    | UpdateNewMessageBody
+    // | UpdateNewMessageBody
     | SendMessage
     | followSuccess
     | unfollowSuccess

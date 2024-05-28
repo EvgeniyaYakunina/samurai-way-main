@@ -1,5 +1,5 @@
 import {AddPostActionType, profileReducer, UpdateNewPostText,} from "./profile-reducer";
-import {dialogReducer, SendMessage, UpdateNewMessageBody} from "./dialogs-reducer";
+import {dialogReducer, SendMessage} from "./dialogs-reducer";
 import {StoreType} from "./redux-store";
 
 // type MessagesType={
