@@ -1,10 +1,8 @@
 import React from "react";
 import {Header} from "./Header";
-import axios from "axios";
 import {connect} from "react-redux";
-import {getAuthUserDataTC, InitialStateAuthType} from "../../redux/auth-reducer";
+import {getAuthUserDataTC, InitialStateAuthType, logoutTC} from "../../redux/auth-reducer";
 import {AppStateType} from "../../redux/redux-store";
-import {authAPI} from "../../api/api";
 
 type MapStateHeadersType = {
     data: InitialStateAuthType
@@ -14,31 +12,22 @@ type MapStateHeadersType = {
     isAuth: boolean
 }
 
-type MapStateDispatchHeadersType={
-    // setAuthUserDataAC:(id: null, email: null, login: null)=> void
-    getAuthUserDataTC: ()=> void
+type MapStateDispatchHeadersType= {
+    getAuthUserDataTC: () => void
+    logoutTC: () => void
 }
-export type HeadersPropsType = MapStateHeadersType & MapStateDispatchHeadersType
 
-class HeaderContainer extends React.Component<HeadersPropsType>{
-    // constructor(props: HeadersPropsType) {
-    //     super(props);
-    // }
+class HeaderContainer extends React.Component<MapStateHeadersType & MapStateDispatchHeadersType>{
+
     componentDidMount() {
         this.props.getAuthUserDataTC()
-        // axios.get('https://social-network.samuraijs.com/api/1.0/auth/me', {withCredentials: true})
-        // authAPI.getAuth()
-        //     .then(response => {
-        //
-        //         if (response.data.resultCode === 0) {
-        //             let {id, email, login} = response.data.data;
-        //             this.props.setAuthUserDataAC(id, email, login);
-        //         }
-        //     });
     }
 
     render() {
-        return <Header {...this.props}/>
+        return <Header {...this.props} logout={this.props.logoutTC}
+                       getAuthUserDataTC={this.props.getAuthUserDataTC}
+                        login={this.props.login} isAuth={this.props.isAuth}
+        />
     }
 }
 
@@ -52,4 +41,4 @@ const mapStateToProps = (state: AppStateType): MapStateHeadersType => {
     }
 };
 
-export default connect (mapStateToProps, {getAuthUserDataTC}) (HeaderContainer);
+export default connect (mapStateToProps, {getAuthUserDataTC, logoutTC}) (HeaderContainer);
