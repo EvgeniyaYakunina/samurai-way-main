@@ -2,6 +2,7 @@ import {ActionsTypes, AppThunkDispatch, AppThunkType} from "./redux-store";
 import {Dispatch} from "redux";
 import {authAPI, usersAPI} from "../api/api";
 import {setTotalUsersCount, setUsers, toggleIsFetching} from "./users-reducer";
+import {stopSubmit} from "redux-form";
 
 export type SetUserData = ReturnType<typeof setAuthUserDataAC>
 
@@ -43,6 +44,9 @@ export const loginTC=(email: string, password: string, rememberMe: boolean)=> (d
             .then(response => {
                 if (response.data.resultCode === 0) {
                     dispatch(getAuthUserDataTC())
+                }else{
+                    let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some error"
+                    dispatch(stopSubmit("login", {_error: message}))
                 }
             });
 }

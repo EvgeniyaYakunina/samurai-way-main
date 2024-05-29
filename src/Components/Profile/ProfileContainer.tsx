@@ -16,10 +16,11 @@ type PathParamsType={
 type MapStateProfileType = {
     profile: ProfileType
     status: string
+    authorizedUserId: number | null
+    isAuth: boolean
 }
 
 type MapStateDispatchProfileType ={
-    // setUserProfile: (profile: ProfileType)=> void
     getUserProfileTC: (userId: number)=> void
     getStatusTC: (userId: number)=> void
     updateStatusTC: (status: string)=> void
@@ -33,31 +34,33 @@ class ProfileContainer extends React.Component<ProfileContainerType> {
         let userId = +this.props.match.params.userId;
 
         if (!userId){
-            userId = 29618;
+            if(this.props.authorizedUserId !== null){
+                userId = this.props.authorizedUserId;
+            }
         }
         this.props.getUserProfileTC(userId)
-        // axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
-        // usersAPI.getProfile(userId)
-        //     .then(response => {
-        //         this.props.setUserProfile(response.data);
-        //     });
         this.props.getStatusTC(userId)
     }
 
     render() {
         return (
             <div>
-                <Profile {...this.props} profile = {this.props.profile} status={this.props.status} updateStatusTC={this.props.updateStatusTC}/>
+                <Profile {...this.props} profile = {this.props.profile}
+                         status={this.props.status}
+                         updateStatusTC={this.props.updateStatusTC}
+                />
             </div>
         )
     }
 }
 
-let mapStateToProps = (state: AppStateType): MapStateProfileType =>{
-return {
- profile: state.profilePage.profile,
- status: state.profilePage.status
-}
+let mapStateToProps = (state: AppStateType): MapStateProfileType => {
+    return {
+        profile: state.profilePage.profile,
+        status: state.profilePage.status,
+        authorizedUserId: state.auth.id,
+        isAuth: state.auth.isAuth
+    }
 }
 // let WithUrlDataContainerComponent = withRouter(ProfileContainer);
 export default compose<ComponentType>(connect(mapStateToProps, {getUserProfileTC, getStatusTC, updateStatusTC}),
