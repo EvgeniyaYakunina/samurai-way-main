@@ -6,7 +6,7 @@ type HeadersPropsType ={
     isAuth: boolean
     login: string | null
     logout: ()=> void
-    getAuthUserDataTC: ()=> void
+    // getAuthUserDataTC: ()=> void
 }
 export const Header = (props: HeadersPropsType) => {
     return (

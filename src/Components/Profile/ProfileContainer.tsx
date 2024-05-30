@@ -35,7 +35,10 @@ class ProfileContainer extends React.Component<ProfileContainerType> {
 
         if (!userId){
             if(this.props.authorizedUserId !== null){
-                userId = this.props.authorizedUserId;
+                userId = this.props.authorizedUserId
+                if(!userId){
+                    this.props.history.push("/login")
+                }
             }
         }
         this.props.getUserProfileTC(userId)
@@ -62,10 +65,12 @@ let mapStateToProps = (state: AppStateType): MapStateProfileType => {
         isAuth: state.auth.isAuth
     }
 }
-// let WithUrlDataContainerComponent = withRouter(ProfileContainer);
-export default compose<ComponentType>(connect(mapStateToProps, {getUserProfileTC, getStatusTC, updateStatusTC}),
+
+export default compose<ComponentType>(connect(mapStateToProps, {
+    getUserProfileTC,
+        getStatusTC,
+        updateStatusTC
+}),
     withRouter,
     // withAuthRedirect
 ) (ProfileContainer)
-// export default withAuthRedirect(connect(mapStateToProps, {getUserProfileTC}) (WithUrlDataContainerComponent))
-// export default  connect<MapStateProfileType, MapStateDispatchProfileType, {}, AppStateType>(mapStateToProps, {setUserProfile}) (WithUrlDataContainerComponent);

@@ -1,7 +1,5 @@
-import {ActionsTypes, AppThunkDispatch, AppThunkType} from "./redux-store";
-import {Dispatch} from "redux";
-import {authAPI, usersAPI} from "../api/api";
-import {setTotalUsersCount, setUsers, toggleIsFetching} from "./users-reducer";
+import {ActionsTypes, AppThunkDispatch} from "./redux-store";
+import {authAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
 
 export type SetUserData = ReturnType<typeof setAuthUserDataAC>
@@ -26,32 +24,41 @@ export const authReducer = (state: InitialStateAuthType = initialState, action: 
     }
 }
 const setAuthUserDataAC = (id: null, email: null, login: null, isAuth: boolean) => (
-    {type: 'SET-USER-DATA', payload:{id, email, login, isAuth}} as const)
+    {type: 'SET-USER-DATA', payload: {id, email, login, isAuth}} as const)
 
-export const getAuthUserDataTC=()=> {
-    return (dispatch: AppThunkDispatch)=>{
-        authAPI.authMe()
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    let {id, email, login} = response.data.data;
-                    dispatch(setAuthUserDataAC(id, email, login, true))
-                }
-            });
-    }
+export const getAuthUserDataTC = () => (dispatch: AppThunkDispatch) => {
+    return authAPI.authMe()
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                let {id, email, login} = response.data.data;
+                dispatch(setAuthUserDataAC(id, email, login, true))
+            }
+        });
 }
-export const loginTC=(email: string, password: string, rememberMe: boolean)=> (dispatch: AppThunkDispatch)=>{
+export const loginTC=(email: string, password: string, rememberMe: boolean)=> {
+
+    console.log({email, password, rememberMe})
+    return (dispatch: AppThunkDispatch)=> {
+
         authAPI.login(email, password, rememberMe)
+
             .then(response => {
+
                 if (response.data.resultCode === 0) {
+
                     dispatch(getAuthUserDataTC())
-                }else{
+                } else {
+
                     let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some error"
                     dispatch(stopSubmit("login", {_error: message}))
                 }
             });
+    }
 }
-export const logoutTC=()=> {
-    return (dispatch: AppThunkDispatch)=>{
+
+export const logoutTC = () => {
+
+    return (dispatch: AppThunkDispatch) => {
         authAPI.logout()
             .then(response => {
                 if (response.data.resultCode === 0) {
@@ -60,4 +67,4 @@ export const logoutTC=()=> {
             });
     }
 }
-// type ActionsType = ReturnType<typeof setAuthUserDataAC> | ReturnType<typeof getAuthUserDataTC >
+
