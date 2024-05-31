@@ -3,8 +3,6 @@ import userPhoto from "../../assets/images/userIcon.png";
 import React from "react";
 import {InitialStateUsersType, UserType} from "../../redux/users-reducer";
 import {NavLink} from "react-router-dom";
-import axios from "axios";
-import {usersAPI} from "../../api/api";
 
 type UsersPropsType = {
     totalUsersCount: number

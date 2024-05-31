@@ -8,6 +8,7 @@ import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
 import {usersAPI} from "../../api/api";
 import {withAuthRedirect} from "../../hoc/AuthRedirect";
 import {compose} from "redux";
+import {getAuthorizedUserId, getIsAuth, getProfile, getProfileStatus} from "./profileSelectors";
 
 type PathParamsType={
     userId: string
@@ -59,10 +60,14 @@ class ProfileContainer extends React.Component<ProfileContainerType> {
 
 let mapStateToProps = (state: AppStateType): MapStateProfileType => {
     return {
-        profile: state.profilePage.profile,
-        status: state.profilePage.status,
-        authorizedUserId: state.auth.id,
-        isAuth: state.auth.isAuth
+        // profile: state.profilePage.profile,
+        // status: state.profilePage.status,
+        // authorizedUserId: state.auth.id,
+        // isAuth: state.auth.isAuth
+        profile: getProfile(state),
+        status: getProfileStatus(state),
+        authorizedUserId: getAuthorizedUserId(state),
+        isAuth: getIsAuth(state)
     }
 }
 
