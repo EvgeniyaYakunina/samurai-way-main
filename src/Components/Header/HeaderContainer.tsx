@@ -26,7 +26,7 @@ class HeaderContainer extends React.Component<MapStateHeadersType & MapStateDisp
     render() {
         return <Header {...this.props} logout={this.props.logoutTC}
                        // getAuthUserDataTC={this.props.getAuthUserDataTC}
-                        login={this.props.login} isAuth={this.props.isAuth}
+                        login={this.props.login} isAuth={ this.props.isAuth}
         />
     }
 }
