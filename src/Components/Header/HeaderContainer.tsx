@@ -3,6 +3,7 @@ import {Header} from "./Header";
 import {connect} from "react-redux";
 import {getAuthUserDataTC, InitialStateAuthType, logoutTC} from "../../redux/auth-reducer";
 import {AppStateType} from "../../redux/redux-store";
+import {getAuthId, getDataAuth, getEmail, getIsAuth, getLogin} from "./headerSelectors";
 
 type MapStateHeadersType = {
     data: InitialStateAuthType
@@ -33,11 +34,11 @@ class HeaderContainer extends React.Component<MapStateHeadersType & MapStateDisp
 
 const mapStateToProps = (state: AppStateType): MapStateHeadersType => {
     return {
-        data: state.auth,
-        id: state.auth.id,
-        email: state.auth.email,
-        login: state.auth.login,
-        isAuth: state.auth.isAuth
+        data: getDataAuth(state),
+        id: getAuthId(state),
+        email: getEmail(state),
+        login: getLogin(state),
+        isAuth: getIsAuth(state)
     }
 };
 
