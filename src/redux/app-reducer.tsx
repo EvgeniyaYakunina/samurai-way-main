@@ -25,12 +25,10 @@ export const appReducer = (state: InitialStateAuthType = initialState, action: A
 }
 const initializedSuccessAC = () => ({type: 'INITIALIZED_SUCCESS'} as const)
 
-export const initializeAppTC=()=> (dispatch: AppThunkDispatch)=>{
+export const initializeAppTC=()=> async (dispatch: AppThunkDispatch)=>{
     let promise = dispatch(getAuthUserDataTC())
-    Promise.all([promise])
-        .then(()=>{
+    await Promise.all([promise])
         dispatch(initializedSuccessAC())
-    })
 }
 
 
