@@ -5,12 +5,12 @@ import React from "react";
 type FormControlPropsType={
     meta: WrappedFieldMetaProps
 }
-const FormControl: React.FC<FormControlPropsType> = ({meta, children, ...props})=>{
-    const showError = meta.touched && meta.error
+const FormControl: React.FC<FormControlPropsType> = ({meta: {touched, error}, children, ...props})=>{
+    const showError = touched && error
     return(
         <div className={s.formControl + " " + (showError ? s.error : "")}>
             <div>{children}</div>
-            {showError && <span>{meta.error}</span>}
+            {showError && <span>{error}</span>}
         </div>
     )
 }

@@ -3,7 +3,6 @@ import userPhoto from "../../assets/images/userIcon.png";
 import React from "react";
 import {UserType} from "../../redux/users-reducer";
 import {NavLink} from "react-router-dom";
-import {Pagination} from "../../common/Paginator/Pagination";
 
 type UsersPropsType = {
     user: UserType

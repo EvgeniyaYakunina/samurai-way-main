@@ -4,15 +4,12 @@ import {AppStateType} from "../../redux/redux-store";
 import {
     followTC,
     getUsersThunkCreator,
-    InitialStateUsersType,
     setCurrentPage,
-    setTotalUsersCount,
-    setUsers, toggleFollowingProgress, toggleIsFetching, unfollowTC,
+  unfollowTC,
     UserType
 } from "../../redux/users-reducer";
 import {Users} from "./Users";
 import {Preloader} from "../../common/Preloader/Preloader";
-import {usersAPI} from "../../api/api";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../hoc/AuthRedirect";
 import {withRouter} from "react-router-dom";
@@ -27,7 +24,6 @@ import {
 
 
 type MapStateUsersType = {
-    // users: InitialStateUsersType
     users: UserType[]
     pageSize: number
     totalUsersCount: number
@@ -65,7 +61,6 @@ class UsersContainerComponent extends React.Component<UsersPropsType> {
                       unfollowTC={this.props.unfollowTC}
                       onPageChanged={this.onPageChanged}
                       usersPage={this.props.users}
-                      // toggleFollowingProgress={this.props.toggleFollowingProgress}
                       followingInProgress={this.props.followingInProgress}
         />
         </>

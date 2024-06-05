@@ -22,7 +22,5 @@ export function withAuthRedirect <T> (Component: ComponentType<T>){
         return <Component {...restProps as T}/>
     }
 
-    // let ConnectedAuthRedirectComponent = connect(mapStateToProps)(RedirectComponent)
-    // return ConnectedAuthRedirectComponent
     return connect(mapStateToProps)(RedirectComponent)
 }
