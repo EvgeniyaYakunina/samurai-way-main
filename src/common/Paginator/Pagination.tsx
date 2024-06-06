@@ -5,14 +5,14 @@ import cn from 'classnames'
 type PaginationPropsType = {
     totalItemsCount: number
     pageSize: number
-    currentPage: number
-    onPageChanged: (pageNumber: number) => void
+    currentPage?: number
+    onPageChanged?: (pageNumber: number) => void
     portionSize?: number
 }
 
 export const Pagination = ({
                                pageSize,
-                               onPageChanged,
+                               onPageChanged = x => x,
                                currentPage = 1,
                                totalItemsCount,
                                portionSize = 10
