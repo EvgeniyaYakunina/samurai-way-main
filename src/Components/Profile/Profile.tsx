@@ -8,14 +8,15 @@ export type PostsType = {
     profile: ProfileType
     status: string
     updateStatusTC: (status: string) => void
+    isOwner: boolean
+    savePhoto: (file: File) => void
 }
 
-export const Profile: React.FC<PostsType> = (props) => {
-    const {profile, status, ...restProps}=props
+export const Profile = ({profile, status, isOwner, updateStatusTC, savePhoto, ...restProps}: PostsType) => {
 
     return (
         <div>
-            <ProfileInfo profile = {profile} status={props.status} updateStatusTC={props.updateStatusTC} />
+            <ProfileInfo  savePhoto={savePhoto} isOwner={isOwner} profile = {profile} status={status} updateStatusTC={updateStatusTC} />
             <MyPostsContainer/>
         </div>
     )

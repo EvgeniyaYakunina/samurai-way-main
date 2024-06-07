@@ -1,5 +1,12 @@
 import {AnyAction, applyMiddleware, combineReducers, createStore} from "redux";
-import {AddPostActionType, DeletePostActionType, profileReducer, setStatus, setUserProfile} from "./profile-reducer";
+import {
+    AddPostActionType,
+    DeletePostActionType,
+    profileReducer,
+    savePhoto, savePhotoSuccess,
+    setStatus,
+    setUserProfile
+} from "./profile-reducer";
 import {dialogReducer, SendMessage} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar-reducer";
 import {
@@ -20,6 +27,7 @@ import {appReducer, initializedSuccess} from "./app-reducer";
 export type ActionsTypes =
     |AddPostActionType
     |DeletePostActionType
+    |savePhotoSuccess
     | SendMessage
     | followSuccess
     | unfollowSuccess
