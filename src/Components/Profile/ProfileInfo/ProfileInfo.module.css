@@ -4,3 +4,11 @@
 .mainPhoto{
     max-width: 200px;
 }
+.formSummaryError {
+    border: red 1px solid;
+    padding: 5px;
+    color: red;
+}
+.contact{
+    padding-left:  10px;
+}

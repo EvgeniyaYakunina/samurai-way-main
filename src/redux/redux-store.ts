@@ -1,9 +1,9 @@
-import {AnyAction, applyMiddleware, combineReducers, createStore} from "redux";
+import {AnyAction, applyMiddleware, combineReducers, compose, createStore} from "redux";
 import {
     AddPostActionType,
     DeletePostActionType,
     profileReducer,
-    savePhoto, savePhotoSuccess,
+    savePhotoSuccess,
     setStatus,
     setUserProfile
 } from "./profile-reducer";
@@ -90,10 +90,18 @@ export type StoreType={
      app: appReducer
 });
 
+declare global {
+    interface Window {
+        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+    }
+}
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+export const store = createStore(rootReducer, composeEnhancers( applyMiddleware(thunkMiddleware)))
 
 export type AppStateType = ReturnType<typeof rootReducer>
 
-export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
+// export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
 
 export type AppThunkDispatch = ThunkDispatch<AppStateType, any, AnyAction>
 export type AppThunkType<ReturnType = void> = ThunkAction<

@@ -1,6 +1,7 @@
-import {ActionsTypes} from "./redux-store";
+import {ActionsTypes, AppStateType, AppThunkDispatch, AppThunkType, RootStateType} from "./redux-store";
 import {Dispatch} from "redux";
 import {profileAPI} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 export type PostType = {
     id: number
@@ -8,25 +9,24 @@ export type PostType = {
     count: number
 }
 
+export type ContactsType = {
+    github: string
+    vk: string
+    facebook: string
+    instagram: string
+    twitter: string
+    website: string
+    youtube: string
+    mainLink: string
+}
 export type ProfileType = {
     userId: string
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
-    contacts: {
-        github: string
-        vk: string
-        facebook: string
-        instagram: string
-        twitter: string
-        website: string
-        youtube: string
-        mainLink: string
-    }
-    photos: {
-        small: string
-        large: string
-    }
+    contacts: ContactsType
+    photos: PhotosType
+    aboutMe: string
 }
 
 export type PhotosType = {
@@ -121,5 +121,23 @@ export const savePhoto = (file: File) => async (dispatch: Dispatch) => {
 
     if (response.data.resultCode === 0) {
         dispatch(savePhotoSuccess(response.data.data.photos))
+    }
+}
+
+export const saveProfile = (profile: ProfileType): AppThunkType =>{
+    return async (dispatch, getState) => {
+        const userId = getState().auth.id
+        const response = await profileAPI.saveProfile(profile)
+
+        if (response.data.resultCode === 0) {
+            if (userId != null) {
+                dispatch(getUserProfileTC(userId))
+            } else {
+                throw new Error("userId can't be null")
+            }
+        } else {
+            dispatch(stopSubmit("edit-profile", {_error: response.data.messages[0]}))
+            return Promise.reject(response.data.messages[0])
+        }
     }
 }

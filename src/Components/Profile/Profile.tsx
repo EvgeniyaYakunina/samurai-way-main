@@ -10,13 +10,14 @@ export type PostsType = {
     updateStatusTC: (status: string) => void
     isOwner: boolean
     savePhoto: (file: File) => void
+    saveProfile: (profile: ProfileType) => Promise<any>
 }
 
-export const Profile = ({profile, status, isOwner, updateStatusTC, savePhoto, ...restProps}: PostsType) => {
+export const Profile = ({profile, status, isOwner, updateStatusTC, savePhoto, saveProfile, ...restProps}: PostsType) => {
 
     return (
         <div>
-            <ProfileInfo  savePhoto={savePhoto} isOwner={isOwner} profile = {profile} status={status} updateStatusTC={updateStatusTC} />
+            <ProfileInfo  saveProfile={saveProfile} savePhoto={savePhoto} isOwner={isOwner} profile = {profile} status={status} updateStatusTC={updateStatusTC} />
             <MyPostsContainer/>
         </div>
     )
