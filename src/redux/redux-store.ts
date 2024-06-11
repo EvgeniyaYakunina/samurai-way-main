@@ -22,7 +22,7 @@ import {
 import {authReducer, GetCaptchaUrlSuccess, SetUserData} from "./auth-reducer";
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {reducer as formReducer} from "redux-form";
-import {appReducer, initializedSuccess} from "./app-reducer";
+import {appReducer, ChangeStatusLoadingActionType, initializedSuccess, SetErrorActionType} from "./app-reducer";
 
 export type ActionsTypes =
     |AddPostActionType
@@ -40,7 +40,16 @@ export type ActionsTypes =
     |SetUserData
     |GetCaptchaUrlSuccess
     |initializedSuccess
+    |SetErrorActionType
+    |ChangeStatusLoadingActionType
     | followingInProgress
+
+export type ResponseType<D = {}> = {
+    resultCode: number
+    messages: string[]
+    fieldsErrors: string[]
+    data: D
+}
 
 type MessagesType={
     id: number

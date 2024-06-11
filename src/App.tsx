@@ -6,7 +6,7 @@ import HeaderContainer from "./Components/Header/HeaderContainer";
 import Login from "./Components/Login/Login";
 import {connect, Provider} from "react-redux";
 import {compose} from "redux";
-import {initializeAppTC} from "./redux/app-reducer";
+import {initializeAppTC, RequestStatusType} from "./redux/app-reducer";
 import {AppStateType, store} from "./redux/redux-store";
 import {Preloader} from "./common/Preloader/Preloader";
 import UsersContainer from "./Components/Users/UsersContainer";
@@ -31,10 +31,11 @@ type AppPropsType= MapStateToPropsType & MapDispatchToPropsType
        return (
            <div className='app-wrapper'>
                <HeaderContainer/>
+               {/*{this.props.status === 'loading' ? <LinearProgress color="primary"/> : ''}*/}
                <Navbar/>
                <div className='app-wrapper-content'>
                    <Switch>
-                       {/*<Route path='/' render={() => <Redirect to={'/profile'}/>}/>*/}
+                       <Route exact path='/' render={() => <Redirect to={'/profile'}/>}/>
                        <Route path='/dialogs' render={withSuspense(DialogsContainer)}/>
                        <Route path='/profile/:userId?' render={withSuspense(ProfileContainer)}/>
                        <Route path='/users' render={() => <UsersContainer/>}/>
@@ -54,13 +55,15 @@ type AppPropsType= MapStateToPropsType & MapDispatchToPropsType
 //таже можно использовать exact( <Route exact path='/login' render={() => <Login/>}/>), который отрисовывается при полном совпадении url
 type MapStateToPropsType={
     initialized: boolean
+    status: RequestStatusType
 }
 type MapDispatchToPropsType = {
     initializeAppTC: () => void
 }
 const mapStateToProps=(state: AppStateType): MapStateToPropsType=>{
    return {
-       initialized: state.app.initialized
+       initialized: state.app.initialized,
+       status: state.app.status
    }
 
 }

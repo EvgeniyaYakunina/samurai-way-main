@@ -27,7 +27,7 @@ export const authReducer = (state: InitialStateAuthType = initialState, action: 
             return state
     }
 }
-const setAuthUserDataAC = (id: null, email: null, login: null, isAuth: boolean) => (
+export const setAuthUserDataAC = (id: null, email: null, login: null, isAuth: boolean) => (
     {type: 'SET-USER-DATA', payload: {id, email, login, isAuth}} as const)
 
 const getCaptchaUrlSuccess = (captchaUrl: string) => (
