@@ -19,7 +19,7 @@ import {
     unfollowSuccess,
     usersReducer
 } from "./users-reducer";
-import {authReducer, SetUserData} from "./auth-reducer";
+import {authReducer, GetCaptchaUrlSuccess, SetUserData} from "./auth-reducer";
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {reducer as formReducer} from "redux-form";
 import {appReducer, initializedSuccess} from "./app-reducer";
@@ -38,6 +38,7 @@ export type ActionsTypes =
     | setUserProfile
     | setStatus
     |SetUserData
+    |GetCaptchaUrlSuccess
     |initializedSuccess
     | followingInProgress
 

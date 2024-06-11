@@ -28,12 +28,11 @@ export const ProfileInfo = ({profile, isOwner, status, updateStatusTC, savePhoto
         }
     }
     const onSubmit = (formData: ProfileType) => {
-        // todo: remove then
         saveProfile(formData).then(
             () => {
                 setEditMode(false);
             }
-        );
+        )
     }
     return (
         <div>
