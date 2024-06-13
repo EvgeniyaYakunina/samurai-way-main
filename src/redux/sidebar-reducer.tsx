@@ -1,6 +1,6 @@
 import {ActionsTypes} from "./redux-store";
 
-
+export type InitialStateSidebarType = typeof initialState
 let initialState={}
 
 

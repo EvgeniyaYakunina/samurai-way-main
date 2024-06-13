@@ -1,22 +1,7 @@
 import {ActionsTypes} from "./redux-store";
 import {usersAPI} from "../api/api";
 import {Dispatch} from "redux";
-
-export type UserType = {
-    id: number
-    photos: {
-        small: string
-        large: string
-    }
-    followed: boolean
-    name: string
-    status: string
-    location: LocationType
-}
-type LocationType = {
-    city: string
-    country: string
-}
+import {UserType} from "../types/types";
 
 export type followSuccess = ReturnType<typeof followSuccess>
 export type unfollowSuccess = ReturnType<typeof unfollowSuccess>

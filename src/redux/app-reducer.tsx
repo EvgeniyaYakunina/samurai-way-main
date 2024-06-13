@@ -7,12 +7,7 @@ import {getAuthUserDataTC, setAuthUserDataAC} from "./auth-reducer";
 import {handleServerAppError} from "../utils/handleServerAppError";
 import {AxiosError} from "axios";
 import {handleServerNetworkError} from "../utils/handleServerNetworkError";
-
-export type initializedSuccess = ReturnType<typeof initializedSuccessAC>
-export type SetErrorActionType = ReturnType<typeof setErrorAC>
-export type ChangeStatusLoadingActionType = ReturnType<typeof changeStatusLoadingAC>
-
-export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
+import {ErrorType, RequestStatusType} from "../types/types";
 
 let initialState = {
  initialized: false,
@@ -37,14 +32,14 @@ export const appReducer = (state: InitialStateAuthType = initialState, action: A
             return state
     }
 }
+
+// Actions
 const initializedSuccessAC = (initialized: boolean) => ({type: 'INITIALIZED_SUCCESS'} as const)
 export const setErrorAC = (error: string | null) => ({type: 'SET-ERROR', error} as const)
 export const changeStatusLoadingAC = (status: RequestStatusType) => ({type: 'SET-STATUS-LOADING', status} as const)
 
-export const initializeAppTC=()=> async (dispatch: AppThunkDispatch)=>{
-    // let promise = dispatch(getAuthUserDataTC())
-    // await Promise.all([promise])
-    //     dispatch(initializedSuccessAC())
+// Thunks
+export const initializeAppTC=()=> (dispatch: AppThunkDispatch)=>{
     dispatch(changeStatusLoadingAC('loading'))
     authAPI.authMe()
         .then(res => {
@@ -54,7 +49,6 @@ export const initializeAppTC=()=> async (dispatch: AppThunkDispatch)=>{
                 dispatch(changeStatusLoadingAC('succeeded'))
             } else {
                 handleServerAppError(res.data, dispatch)
-                //  dispatch(setIsLoggedInAC(res.data.data))
             }
         })
         .catch((error: AxiosError<ErrorType>) => {
@@ -65,12 +59,7 @@ export const initializeAppTC=()=> async (dispatch: AppThunkDispatch)=>{
         })
 }
 
-
-export type ErrorType = {
-    statusCode: number
-    messages: [{
-        message: string
-        field: string
-    }],
-    error: string
-}
+// types
+export type initializedSuccess = ReturnType<typeof initializedSuccessAC>
+export type SetErrorActionType = ReturnType<typeof setErrorAC>
+export type ChangeStatusLoadingActionType = ReturnType<typeof changeStatusLoadingAC>

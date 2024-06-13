@@ -1,12 +1,10 @@
 import {
     addPostAC,
     deletePostAC,
-    PostType,
     profileReducer,
-    ProfileType,
-    setStatus,
-    updateStatusTC
+    setStatus
 } from "../redux/profile-reducer";
+import {PostType, ProfileType} from "../types/types";
 
 let startState = {
     posts: [

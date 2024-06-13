@@ -5,7 +5,6 @@ import {AppStateType} from "../../redux/redux-store";
 import {
     getStatusTC,
     getUserProfileTC,
-    ProfileType,
     savePhoto,
     saveProfile,
     updateStatusTC
@@ -13,6 +12,7 @@ import {
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {compose} from "redux";
 import {getAuthorizedUserId, getIsAuth, getProfile, getProfileStatus} from "./profileSelectors";
+import {ProfileType} from "../../types/types";
 
 type PathParamsType={
     userId: string

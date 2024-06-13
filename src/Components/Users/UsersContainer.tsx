@@ -5,8 +5,7 @@ import {
     followTC,
     getUsersThunkCreator,
     setCurrentPage,
-  unfollowTC,
-    UserType
+  unfollowTC
 } from "../../redux/users-reducer";
 import {Users} from "./Users";
 import {Preloader} from "../../common/Preloader/Preloader";
@@ -21,6 +20,7 @@ import {
     getTotalUsersCount,
     getUsersPage
 } from "./usersSelectors";
+import {UserType} from "../../types/types";
 
 
 type MapStateUsersType = {
