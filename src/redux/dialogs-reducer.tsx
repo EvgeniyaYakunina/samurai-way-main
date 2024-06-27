@@ -1,4 +1,3 @@
-import {ActionsTypes} from "./redux-store";
 import {DialogType, MessagesType} from "../types/types";
 
 let initialState ={
@@ -20,7 +19,7 @@ let initialState ={
 }
 export type InitialStateDialogsType = typeof initialState
 
-export const dialogReducer = (state: InitialStateDialogsType = initialState, action: ActionsTypes): InitialStateDialogsType => {
+export const dialogReducer = (state: InitialStateDialogsType = initialState, action: DialogsActionsTypes): InitialStateDialogsType => {
 
     switch (action.type) {
         case 'SEND-MESSAGE':
@@ -37,4 +36,5 @@ export  const sendMessageAC = (newMessageBody: string) => (
 )
 
 //types
-export type SendMessage = ReturnType<typeof sendMessageAC>
+export type DialogsActionsTypes =
+    |ReturnType<typeof sendMessageAC>

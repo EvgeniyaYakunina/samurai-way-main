@@ -1,9 +1,6 @@
-import {ActionsTypes, AppThunkDispatch, AppThunkType} from "./redux-store";
-import {Dispatch} from "redux";
-import {authAPI, usersAPI} from "../api/api";
-import {setTotalUsersCount, setUsers, toggleIsFetching} from "./users-reducer";
-import {stopSubmit} from "redux-form";
-import {getAuthUserDataTC, setAuthUserDataAC} from "./auth-reducer";
+import {AppThunkDispatch, AppThunkType} from "./redux-store";
+import {authAPI} from "../api/api";
+import {setAuthUserDataAC} from "./auth-reducer";
 import {handleServerAppError} from "../utils/handleServerAppError";
 import {AxiosError} from "axios";
 import {handleServerNetworkError} from "../utils/handleServerNetworkError";
@@ -17,7 +14,7 @@ let initialState = {
 
 export type InitialStateAuthType = typeof initialState
 
-export const appReducer = (state: InitialStateAuthType = initialState, action: ActionsTypes): InitialStateAuthType => {
+export const appReducer = (state: InitialStateAuthType = initialState, action: AppActionsTypes): InitialStateAuthType => {
 
     switch (action.type) {
         case 'INITIALIZED_SUCCESS':
@@ -39,7 +36,7 @@ export const setErrorAC = (error: string | null) => ({type: 'SET-ERROR', error} 
 export const changeStatusLoadingAC = (status: RequestStatusType) => ({type: 'SET-STATUS-LOADING', status} as const)
 
 // Thunks
-export const initializeAppTC=()=> (dispatch: AppThunkDispatch)=>{
+export const initializeAppTC=(): AppThunkType => (dispatch)=>{
     dispatch(changeStatusLoadingAC('loading'))
     authAPI.authMe()
         .then(res => {
@@ -60,6 +57,7 @@ export const initializeAppTC=()=> (dispatch: AppThunkDispatch)=>{
 }
 
 // types
-export type initializedSuccess = ReturnType<typeof initializedSuccessAC>
-export type SetErrorActionType = ReturnType<typeof setErrorAC>
-export type ChangeStatusLoadingActionType = ReturnType<typeof changeStatusLoadingAC>
+export type AppActionsTypes =
+    | ReturnType<typeof initializedSuccessAC>
+    | ReturnType<typeof setErrorAC>
+    | ReturnType<typeof changeStatusLoadingAC>

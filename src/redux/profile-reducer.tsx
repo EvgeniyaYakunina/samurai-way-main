@@ -1,4 +1,4 @@
-import {ActionsTypes, AppStateType, AppThunkDispatch, AppThunkType, RootStateType} from "./redux-store";
+import {AppThunkType} from "./redux-store";
 import {Dispatch} from "redux";
 import {profileAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
@@ -14,7 +14,7 @@ let initialState = {
 }
 export type InitialStateMyPostsType = typeof initialState
 
-export const profileReducer = (state: InitialStateMyPostsType = initialState, action: ActionsTypes): InitialStateMyPostsType => {
+export const profileReducer = (state: InitialStateMyPostsType = initialState, action: ProfileActionsTypes): InitialStateMyPostsType => {
 
     switch (action.type) {
         case 'ADD-POST':
@@ -56,21 +56,21 @@ export const savePhotoSuccess = (photos: PhotosType) => {
 }
 
 // Thunk
-export const getUserProfileTC = (userId: number) => async (dispatch: Dispatch) => {
+export const getUserProfileTC = (userId: number): AppThunkType => async (dispatch: Dispatch) => {
     let response = await profileAPI.getProfile(userId)
     dispatch(setUserProfile(response.data))
 }
-export const getStatusTC = (userId: number) => async (dispatch: Dispatch) => {
+export const getStatusTC = (userId: number): AppThunkType => async (dispatch: Dispatch) => {
     let response = await profileAPI.getStatus(userId)
     dispatch(setStatus(response.data))
 }
-export const updateStatusTC = (status: string) => async (dispatch: Dispatch) => {
+export const updateStatusTC = (status: string): AppThunkType => async (dispatch: Dispatch) => {
     let response = await profileAPI.updateStatus(status)
     if (response.data.resultCode === 0) {
         dispatch(setStatus(status))
     }
 }
-export const savePhoto = (file: File) => async (dispatch: Dispatch) => {
+export const savePhoto = (file: File): AppThunkType => async (dispatch: Dispatch) => {
     let response = await profileAPI.savePhoto(file)
     if (response.data.resultCode === 0) {
         dispatch(savePhotoSuccess(response.data.data.photos))
@@ -95,8 +95,9 @@ export const saveProfile = (profile: ProfileType): AppThunkType =>{
 }
 
 // types
-export type AddPostActionType = ReturnType<typeof addPostAC>
-export type setUserProfile = ReturnType<typeof setUserProfile>
-export type setStatus = ReturnType<typeof setStatus>
-export type DeletePostActionType = ReturnType<typeof deletePostAC>
-export type savePhotoSuccess = ReturnType<typeof savePhotoSuccess>
+export type ProfileActionsTypes =
+    | ReturnType<typeof addPostAC>
+    | ReturnType<typeof setUserProfile>
+    | ReturnType<typeof setStatus>
+    | ReturnType<typeof deletePostAC>
+    | ReturnType<typeof savePhotoSuccess>

@@ -1,6 +1,5 @@
-import {AddPostActionType, profileReducer} from "./profile-reducer";
-import {dialogReducer, SendMessage} from "./dialogs-reducer";
-import {StoreType} from "./redux-store";
+import {profileReducer} from "./profile-reducer";
+import {dialogReducer, } from "./dialogs-reducer";
 
 // type MessagesType={
 //     id: number
