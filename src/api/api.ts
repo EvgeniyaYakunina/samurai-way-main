@@ -1,5 +1,5 @@
 import axios from "axios";
-import {ProfileType} from "../types/types";
+import {BaseResponseType, MeResponseType, ProfileType} from "../types/types";
 
 const instance = axios.create({
     withCredentials: true,
@@ -51,15 +51,17 @@ export const profileAPI={
 }
 export const authAPI ={
     authMe(){
-        return instance.get(`auth/me`)
+        return instance.get<BaseResponseType<MeResponseType>>(`auth/me`).then(res=> res.data)
     },
     login(email: string, password:string, rememberMe:boolean, captcha: null | string){
-        return instance.post(`auth/login`, {email, password, rememberMe, captcha})
+        return instance.post<BaseResponseType<{userId: number}>>(`auth/login`, {email, password, rememberMe, captcha})
+            .then(res=> res.data)
     },
     logout(){
-        return instance.delete(`auth/login`)
+        return instance.delete<BaseResponseType>(`auth/login`)
     }
 }
+
 export const securityAPI={
     getCaptchaUrl(){
         return instance.get(`security/get-captcha-url`)

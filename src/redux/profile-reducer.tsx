@@ -2,7 +2,7 @@ import {AppThunkType} from "./redux-store";
 import {Dispatch} from "redux";
 import {profileAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
-import {PhotosType, PostType, ProfileType} from "../types/types";
+import {PhotosType, PostType, ProfileType, ResultCodeEnum} from "../types/types";
 
 let initialState = {
     posts: [
@@ -20,19 +20,14 @@ export const profileReducer = (state: InitialStateMyPostsType = initialState, ac
         case 'ADD-POST':
             const newPost = {id: 5, message: action.newPostText, count: 0}
             return {...state, posts: [...state.posts, newPost]}
-
         case 'SET_USER_PROFILE':
             return {...state, profile: action.profile}
-
         case 'SET_STATUS':
             return {...state, status: action.status}
-
         case 'DELETE-POST':
             return {...state, posts: state.posts.filter(p => p.id !== action.postId)};
-
         case 'SAVE_PHOTO_SUCCESS':
             return {...state, profile: {...state.profile,photos: action.photos}as ProfileType};
-
         default:
             return state
     }
@@ -66,13 +61,13 @@ export const getStatusTC = (userId: number): AppThunkType => async (dispatch: Di
 }
 export const updateStatusTC = (status: string): AppThunkType => async (dispatch: Dispatch) => {
     let response = await profileAPI.updateStatus(status)
-    if (response.data.resultCode === 0) {
+    if (response.data.resultCode === ResultCodeEnum.Success) {
         dispatch(setStatus(status))
     }
 }
 export const savePhoto = (file: File): AppThunkType => async (dispatch: Dispatch) => {
     let response = await profileAPI.savePhoto(file)
-    if (response.data.resultCode === 0) {
+    if (response.data.resultCode === ResultCodeEnum.Success) {
         dispatch(savePhotoSuccess(response.data.data.photos))
     }
 }
@@ -81,7 +76,7 @@ export const saveProfile = (profile: ProfileType): AppThunkType =>{
         const userId = getState().auth.id
         const response = await profileAPI.saveProfile(profile)
 
-        if (response.data.resultCode === 0) {
+        if (response.data.resultCode === ResultCodeEnum.Success) {
             if (userId != null) {
                 dispatch(getUserProfileTC(userId))
             } else {

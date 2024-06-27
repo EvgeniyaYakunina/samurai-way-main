@@ -1,13 +1,13 @@
-import {AppThunkDispatch, AppThunkType} from "./redux-store";
+import {AppThunkType} from "./redux-store";
 import {authAPI} from "../api/api";
 import {setAuthUserDataAC} from "./auth-reducer";
 import {handleServerAppError} from "../utils/handleServerAppError";
 import {AxiosError} from "axios";
 import {handleServerNetworkError} from "../utils/handleServerNetworkError";
-import {ErrorType, RequestStatusType} from "../types/types";
+import {ErrorType, RequestStatusType, ResultCodeEnum} from "../types/types";
 
 let initialState = {
- initialized: false,
+    initialized: false,
     error: null as string | null,
     status: 'idle' as RequestStatusType
 }
@@ -21,10 +21,8 @@ export const appReducer = (state: InitialStateAuthType = initialState, action: A
             return {...state,initialized: true}
         case 'SET-ERROR' :
             return {...state, error: action.error}
-
         case 'SET-STATUS-LOADING' :
             return {...state, status: action.status}
-
         default:
             return state
     }
@@ -40,12 +38,12 @@ export const initializeAppTC=(): AppThunkType => (dispatch)=>{
     dispatch(changeStatusLoadingAC('loading'))
     authAPI.authMe()
         .then(res => {
-            if (res.data.resultCode === 0) {
-                const data = res.data.data
+            if (res.resultCode === ResultCodeEnum.Success) {
+                const data = res.data
                 dispatch(setAuthUserDataAC(data.id, data.email, data.login, true))
                 dispatch(changeStatusLoadingAC('succeeded'))
             } else {
-                handleServerAppError(res.data, dispatch)
+                handleServerAppError(res, dispatch)
             }
         })
         .catch((error: AxiosError<ErrorType>) => {

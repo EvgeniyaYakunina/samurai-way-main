@@ -1,8 +1,8 @@
 import {changeStatusLoadingAC, setErrorAC} from "../redux/app-reducer";
 import {Dispatch} from "redux";
-import {ResponseType} from '../types/types'
+import {BaseResponseType} from "../types/types";
 
-export const handleServerAppError = <T>(data: ResponseType<T>, dispatch: Dispatch) => {
+export const handleServerAppError = <T>(data: BaseResponseType<T>, dispatch: Dispatch) => {
     const error = data.messages[0]
     if (error) {
         dispatch(setErrorAC(error))

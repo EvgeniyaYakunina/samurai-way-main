@@ -69,11 +69,21 @@ export type ActionsTypes =
     | AuthActionsTypes
     | AppActionsTypes
 
-export type ResponseType<D = {}> = {
-    resultCode: number
+export type BaseResponseType<D = {}> = {
+    resultCode: ResultCodeEnum
     messages: string[]
     fieldsErrors: string[]
     data: D
+}
+export type MeResponseType = {
+    id: number
+    email: string
+    login: string
+}
+ export enum ResultCodeEnum{
+    Success = 0,
+    Error = 1,
+   CaptchaIsRequired = 10
 }
 
 // export type ProfilePageType={
