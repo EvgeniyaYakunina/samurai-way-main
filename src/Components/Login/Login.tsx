@@ -19,7 +19,8 @@ type FormDataType = {
 type CaptchaType={
     captchaUrl: string | null
 }
-export const LoginForm: React.FC<InjectedFormProps<FormDataType, CaptchaType> & CaptchaType> = ({handleSubmit, error, captchaUrl}) => {
+type LoginFormProps = InjectedFormProps<FormDataType, CaptchaType> & CaptchaType
+export const LoginForm = ({handleSubmit, error, captchaUrl}: LoginFormProps) => {
     return <div>
         <form onSubmit={handleSubmit}>
             <div>

@@ -7,7 +7,6 @@ const instance = axios.create({
     headers: {
         "API-KEY": "dda441b2-5c1f-4026-aae6-ffbccdaecd79"
     }
-
 })
 
 export const usersAPI= {
@@ -17,7 +16,6 @@ export const usersAPI= {
                 return response.data;
             })
     },
-
     follow(userId: number){
         return instance.post(`follow/${userId}`, {})
     },

@@ -4,12 +4,13 @@ import {createField, GetStringKeys, Input, Textarea} from "../../../common/Forms
 import s from './ProfileInfo.module.css'
 import {ProfileType} from "../../../types/types";
 
-type PropsType = {
+type ProfileDataFormType = InjectedFormProps<ProfileType, PropsType> & PropsType
+type PropsType={
     profile: ProfileType
 }
 type ProfileTypeKeys = GetStringKeys<ProfileType>
 
-export const ProfileDataForm: React.FC<InjectedFormProps<ProfileType, PropsType> & PropsType> = ({handleSubmit, profile, error}) => {
+export const ProfileDataForm = ({handleSubmit, profile, error}: ProfileDataFormType) => {
     return <form onSubmit={handleSubmit}>
         <div><button>save</button></div>
         {error && <div className={s.formSummaryError}>
