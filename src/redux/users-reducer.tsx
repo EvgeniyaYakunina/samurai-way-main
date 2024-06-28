@@ -1,7 +1,6 @@
-import {usersAPI} from "../api/api";
-import {Dispatch} from "redux";
 import {ResultCodeEnum, UserType} from "../types/types";
 import {AppThunkType} from "./redux-store";
+import {usersAPI} from "../api/users-api";
 
 export type InitialStateUsersType = typeof initialState
 
@@ -70,7 +69,7 @@ export const toggleFollowingProgress = (isFetching: boolean, userId: number) => 
     {type: 'TOGGLE_IS_FETCHING_PROGRESS', isFetching, userId} as const
 )
 // thunks
-export const getUsersThunkCreator = (page: number, pageSize: number): AppThunkType => async (dispatch: Dispatch) => {
+export const getUsersThunkCreator = (page: number, pageSize: number): AppThunkType => async (dispatch) => {
     dispatch(toggleIsFetching(true))
     dispatch(setCurrentPage(page))
     let data = await usersAPI.getUsers(page, pageSize)
@@ -78,18 +77,18 @@ export const getUsersThunkCreator = (page: number, pageSize: number): AppThunkTy
     dispatch(setUsers(data.items))
     dispatch(setTotalUsersCount(data.totalCount))
 }
-export const followTC = (userId: number): AppThunkType => async (dispatch: Dispatch) => {
+export const followTC = (userId: number): AppThunkType => async (dispatch) => {
     dispatch(toggleFollowingProgress(true, userId))
-    let response = await usersAPI.follow(userId)
-    if (response.data.resultCode === ResultCodeEnum.Success) {
+    let data = await usersAPI.follow(userId)
+    if (data.resultCode === ResultCodeEnum.Success) {
         dispatch(followSuccess(userId))
     }
     dispatch(toggleFollowingProgress(false, userId))
 }
-export const unfollowTC = (userId: number): AppThunkType => async (dispatch: Dispatch) => {
+export const unfollowTC = (userId: number): AppThunkType => async (dispatch) => {
     dispatch(toggleFollowingProgress(true, userId))
-    let response = await usersAPI.unfollow(userId)
-    if (response.data.resultCode === ResultCodeEnum.Success) {
+    let data = await usersAPI.unfollow(userId)
+    if (data.resultCode === ResultCodeEnum.Success) {
         dispatch(unfollowSuccess(userId))
     }
     dispatch(toggleFollowingProgress(false, userId))

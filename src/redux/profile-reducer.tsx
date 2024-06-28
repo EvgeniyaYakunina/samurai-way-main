@@ -1,8 +1,7 @@
 import {AppThunkType} from "./redux-store";
-import {Dispatch} from "redux";
-import {profileAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
 import {PhotosType, PostType, ProfileType, ResultCodeEnum} from "../types/types";
+import {profileAPI} from "../api/profile-api";
 
 let initialState = {
     posts: [
@@ -51,40 +50,40 @@ export const savePhotoSuccess = (photos: PhotosType) => {
 }
 
 // Thunk
-export const getUserProfileTC = (userId: number): AppThunkType => async (dispatch: Dispatch) => {
-    let response = await profileAPI.getProfile(userId)
-    dispatch(setUserProfile(response.data))
+export const getUserProfileTC = (userId: number): AppThunkType => async (dispatch) => {
+    let data = await profileAPI.getProfile(userId)
+    dispatch(setUserProfile(data))
 }
-export const getStatusTC = (userId: number): AppThunkType => async (dispatch: Dispatch) => {
-    let response = await profileAPI.getStatus(userId)
-    dispatch(setStatus(response.data))
+export const getStatusTC = (userId: number): AppThunkType => async (dispatch) => {
+    let data = await profileAPI.getStatus(userId)
+    dispatch(setStatus(data))
 }
-export const updateStatusTC = (status: string): AppThunkType => async (dispatch: Dispatch) => {
-    let response = await profileAPI.updateStatus(status)
-    if (response.data.resultCode === ResultCodeEnum.Success) {
+export const updateStatusTC = (status: string): AppThunkType => async (dispatch) => {
+    let data = await profileAPI.updateStatus(status)
+    if (data.resultCode === ResultCodeEnum.Success) {
         dispatch(setStatus(status))
     }
 }
-export const savePhoto = (file: File): AppThunkType => async (dispatch: Dispatch) => {
-    let response = await profileAPI.savePhoto(file)
-    if (response.data.resultCode === ResultCodeEnum.Success) {
-        dispatch(savePhotoSuccess(response.data.data.photos))
+export const savePhoto = (file: File): AppThunkType => async (dispatch) => {
+    let data = await profileAPI.savePhoto(file)
+    if (data.resultCode === ResultCodeEnum.Success) {
+        dispatch(savePhotoSuccess(data.data.photos))
     }
 }
 export const saveProfile = (profile: ProfileType): AppThunkType =>{
     return async (dispatch, getState) => {
         const userId = getState().auth.id
-        const response = await profileAPI.saveProfile(profile)
+        const data = await profileAPI.saveProfile(profile)
 
-        if (response.data.resultCode === ResultCodeEnum.Success) {
+        if (data.resultCode === ResultCodeEnum.Success) {
             if (userId != null) {
                 dispatch(getUserProfileTC(userId))
             } else {
                 throw new Error("userId can't be null")
             }
         } else {
-            dispatch(stopSubmit("edit-profile", {_error: response.data.messages[0]}))
-            return Promise.reject(response.data.messages[0])
+            dispatch(stopSubmit("edit-profile", {_error: data.messages[0]}))
+            return Promise.reject(data.messages[0])
         }
     }
 }

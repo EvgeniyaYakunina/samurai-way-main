@@ -1,7 +1,8 @@
 import {AppThunkDispatch, AppThunkType} from "./redux-store";
-import {authAPI, securityAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
 import {ResultCodeEnum} from "../types/types";
+import {authAPI} from "../api/auth-api";
+import {securityAPI} from "../api/security-api";
 
 let initialState = {
     id: null as (number | null),
@@ -59,8 +60,8 @@ export const logoutTC = (): AppThunkType => async (dispatch)=> {
     }
 }
 export const getCaptchaUrl = (): AppThunkType => async (dispatch: AppThunkDispatch) => {
-    const response = await securityAPI.getCaptchaUrl()
-    const captchaUrl = response.data.url
+    const data = await securityAPI.getCaptchaUrl()
+    const captchaUrl = data.url
     dispatch(getCaptchaUrlSuccess(captchaUrl))
 }
 

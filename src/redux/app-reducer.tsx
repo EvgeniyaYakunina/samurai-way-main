@@ -1,10 +1,10 @@
 import {AppThunkType} from "./redux-store";
-import {authAPI} from "../api/api";
 import {setAuthUserDataAC} from "./auth-reducer";
 import {handleServerAppError} from "../utils/handleServerAppError";
 import {AxiosError} from "axios";
 import {handleServerNetworkError} from "../utils/handleServerNetworkError";
 import {ErrorType, RequestStatusType, ResultCodeEnum} from "../types/types";
+import {authAPI} from "../api/auth-api";
 
 let initialState = {
     initialized: false,

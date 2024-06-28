@@ -86,6 +86,17 @@ export type MeResponseType = {
    CaptchaIsRequired = 10
 }
 
+export type GetItemsType={
+    items: UserType[]
+    totalCount: number
+    error: string | null
+}
+export type SavePhotoResponseDataType={
+    photos: PhotosType
+}
+export type GetCaptchaResponseType={
+    url: string
+}
 // export type ProfilePageType={
 //     posts: Array<PostType>
 //     newPostText: string
