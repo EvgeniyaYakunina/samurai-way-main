@@ -1,12 +1,10 @@
 import {usersAPI} from '../api/users-api'
-import {BaseResponseType, GetItemsType} from "../types/types";
+import {BaseResponseType, GetItemsType} from "../types/types"
 import {
-    followSuccess, followTC,
-    getUsersThunkCreator, setCurrentPage, setTotalUsersCount, setUsers,
-    toggleFollowingProgress, toggleIsFetching,
-    unfollowSuccess, unfollowTC,
-} from "../redux/users-reducer";
-import {waitFor} from "@testing-library/react";
+    followSuccess, followTC, getUsersThunkCreator, setCurrentPage, setFilter, setTotalUsersCount, setUsers,
+    toggleFollowingProgress, toggleIsFetching, unfollowSuccess, unfollowTC
+} from "../redux/users-reducer"
+import {waitFor} from "@testing-library/react"
 
 
 jest.mock('../api/users-api') //замокали объект к-ый импортируется по этому пути
@@ -100,13 +98,14 @@ test('success unfollow thunk', async () => {
 test('users should be received successfully', async() => {
 
     userAPIMock.getUsers.mockReturnValue(Promise.resolve(getUsersResult))
-    const thunk = getUsersThunkCreator(2, 10)
+    const thunk = getUsersThunkCreator(2, 10, {term: '', friend: null} )
 
     await thunk(dispatchMock, getStateMock, {})
-    expect(dispatchMock).toHaveBeenCalledTimes(5);
+    expect(dispatchMock).toHaveBeenCalledTimes(6)
     expect(dispatchMock).toHaveBeenNthCalledWith(1, toggleIsFetching(true))
     expect(dispatchMock).toHaveBeenNthCalledWith(2, setCurrentPage(2))
-    expect(dispatchMock).toHaveBeenNthCalledWith(3, toggleIsFetching(false))
-    expect(dispatchMock).toHaveBeenNthCalledWith(4, setUsers(fakeData.items))
-    expect(dispatchMock).toHaveBeenNthCalledWith(5, setTotalUsersCount(fakeData.totalCount))
+    expect(dispatchMock).toHaveBeenNthCalledWith(3, setFilter({term: '', friend: null}))
+    expect(dispatchMock).toHaveBeenNthCalledWith(4, toggleIsFetching(false))
+    expect(dispatchMock).toHaveBeenNthCalledWith(5, setUsers(fakeData.items))
+    expect(dispatchMock).toHaveBeenNthCalledWith(6, setTotalUsersCount(fakeData.totalCount))
 })
