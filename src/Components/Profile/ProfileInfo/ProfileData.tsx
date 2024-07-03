@@ -35,7 +35,7 @@ export const ProfileData = ({profile, isOwner, goToEditMode}: ProfileDataPropsTy
                         contactTitle={key}
                         contactValue={contacts[key as keyof ContactsType]}
                     />
-                );
+                )
             })}
         </div>
     </div>

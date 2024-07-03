@@ -4,10 +4,6 @@ import {UsersActionsTypes} from "../redux/users-reducer";
 import {ProfileActionsTypes} from "../redux/profile-reducer";
 import {AuthActionsTypes} from "../redux/auth-reducer";
 
-export type PhotosType = {
-    small: string | null
-    large: string | null
-}
 export type UserType = {
     id: number
     photos: PhotosType
@@ -15,6 +11,10 @@ export type UserType = {
     name: string
     status: string
     location: LocationType
+}
+export type PhotosType = {
+    small: string | null
+    large: string | null
 }
 type LocationType = {
     city: string

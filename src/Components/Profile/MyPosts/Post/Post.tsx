@@ -7,14 +7,14 @@ type PostTypeProps = {
 
 }
 
-export const Post: React.FC<PostTypeProps> = (props) => {
+export const Post= ({count, message}: PostTypeProps) => {
 
     return (
         <div className={s.item}>
             <img src="https://shapka-youtube.ru/wp-content/uploads/2021/03/patsanskaya-kartinka-na-avu.jpg" alt=""/>
-            {props.message}
+            {message}
             <div>
-                <span>{props.count} likes</span>
+                <span>{count} likes</span>
             </div>
         </div>
     )

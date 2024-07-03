@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ComponentType} from 'react';
 import './App.css';
 import {Navbar} from "./Components/Navbar/Navbar";
 import {BrowserRouter, Redirect, Route, Switch, withRouter} from "react-router-dom";
@@ -17,7 +17,8 @@ const DialogsContainer = React.lazy(() => import("./Components/Dialogs/DialogsCo
 const ProfileContainer = React.lazy(() => import('./Components/Profile/ProfileContainer'))
 //не загружает компоненту сразу полностью,т.е сборщик не собирает ее в большой бандл,а когда понадобиться ее отрисовывать,
 //запрашивает ее у сервера,чтобы первый загрузочный файл не был таким большим и загружался быстрее
-
+const SuspendedDialogs = withSuspense(DialogsContainer)
+const SuspendedProfile = withSuspense(ProfileContainer)
 type AppPropsType= MapStateToPropsType & MapDispatchToPropsType
 
  class App extends React.Component<AppPropsType>{
@@ -37,8 +38,8 @@ type AppPropsType= MapStateToPropsType & MapDispatchToPropsType
                <div className='app-wrapper-content'>
                    <Switch>
                        <Route exact path='/' render={() => <Redirect to={'/profile'}/>}/>
-                       <Route path='/dialogs' render={withSuspense(DialogsContainer)}/>
-                       <Route path='/profile/:userId?' render={withSuspense(ProfileContainer)}/>
+                       <Route path='/dialogs' render={()=><SuspendedDialogs/>}/>
+                       <Route path='/profile/:userId?' render={()=> <SuspendedProfile/>}/>
                        <Route path='/users' render={() => <UsersContainer/>}/>
                        <Route path='/login' render={() => <Login/>}/>
                        <Route path='*' render={() => <div>404 NOT FOUND</div>}/>
@@ -69,7 +70,7 @@ const mapStateToProps=(state: AppStateType): MapStateToPropsType=>{
 
 }
 
-export const AppContainer = compose<React.ComponentType>(withRouter,connect(mapStateToProps, {initializeAppTC}))(App);
+export const AppContainer = compose<ComponentType>(withRouter,connect(mapStateToProps, {initializeAppTC}))(App);
 // compose один за другим применяет HOC
 // HOC - это функция, которая принимает одну компоненту и возвращает другую компоненту (контейнерную компоненту над входящей компонентой),
 // чтобы передать ей какие-то способности и props

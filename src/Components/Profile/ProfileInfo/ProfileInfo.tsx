@@ -24,16 +24,14 @@ export const ProfileInfo = ({profile, isOwner, status, updateStatusTC, savePhoto
     }
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length) {
-            savePhoto(e.target.files[0]);
+            savePhoto(e.target.files[0])
         }
     }
     const onSubmit = (formData: ProfileType) => {
-        saveProfile(formData).then(
-            () => {
-                setEditMode(false);
-            }
-        )
+        saveProfile(formData)
+            .then(() => {setEditMode(false)})
     }
+
     return (
         <div>
             <div>

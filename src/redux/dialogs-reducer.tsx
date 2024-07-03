@@ -23,8 +23,7 @@ export const dialogReducer = (state: InitialStateDialogsType = initialState, act
 
     switch (action.type) {
         case 'SEND-MESSAGE':
-            let body = action.newMessageBody;
-            return {...state, messages: [...state.messages, {id: 6, message: body}]}
+            return {...state, messages: [...state.messages, {id: 6, message: action.newMessageBody}]}
         default:
             return state
     }

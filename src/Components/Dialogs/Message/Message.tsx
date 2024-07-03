@@ -5,13 +5,13 @@ type MessageProps={
     message: string
     id: number
 }
-export const Message: React.FC<MessageProps>=(props)=>{
+export const Message=({message, id}:MessageProps)=>{
 
-
+let path = "/dialogs/" + id
 
     return(
         <div>
-        <div className={s.message}>{props.message}</div>
+        <div className={s.message}>{message}</div>
         </div>
     )
 }
