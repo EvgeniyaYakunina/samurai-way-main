@@ -13,7 +13,7 @@ type FriendFormType = 'true' | 'false' | 'null'
 
 type FormType = {
     term: string
-    friend: 'true' | 'false' | 'null'
+    friend: FriendFormType
 }
 
 type PropsType = {
