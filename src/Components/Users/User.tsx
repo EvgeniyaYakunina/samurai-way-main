@@ -1,17 +1,17 @@
-import s from "./Users.module.css";
-import userPhoto from "../../assets/images/userIcon.png";
-import React from "react";
-import {NavLink} from "react-router-dom";
-import {UserType} from "../../types/types";
+import s from "./Users.module.css"
+import userPhoto from "../../assets/images/userIcon.png"
+import React from "react"
+import {NavLink} from "react-router-dom"
+import {UserType} from "../../types/types"
 
 type UsersPropsType = {
     user: UserType
-    followTC: (userId: number) => void
-    unfollowTC: (userId: number) => void
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
     followingInProgress: Array<number>
 }
 
-export const User = ({user, unfollowTC, followTC, followingInProgress}: UsersPropsType) => {
+export const User = ({user, followingInProgress, follow, unfollow}: UsersPropsType) => {
 
     return <div>
         <div key={user.id}>
@@ -24,11 +24,11 @@ export const User = ({user, unfollowTC, followTC, followingInProgress}: UsersPro
                    <div>
                        {user.followed ?
                            <button disabled={followingInProgress.some(id => id === user.id)} onClick={() => {
-                               unfollowTC(user.id)
+                               unfollow(user.id)
                            }}> Unfollow </button>
 
                            : <button disabled={followingInProgress.some(id => id === user.id)} onClick={() => {
-                               followTC(user.id)
+                               follow(user.id)
                            }}> Follow </button>}
                    </div>
                </span>

@@ -1,35 +1,39 @@
 import s from "./Users.module.css";
-import React from "react";
+import React, {useEffect} from "react";
 import {Pagination} from "../../common/Paginator/Pagination";
 import {User} from "./User";
-import {UserType} from "../../types/types";
 import {UsersSearchForm} from "./UsersSearchForm";
-import {FilterType} from "../../redux/users-reducer";
+import {FilterType, followTC, getUsersThunkCreator, unfollowTC} from "../../redux/users-reducer";
+import {useAppDispatch, useAppSelector} from "../../redux/redux-store";
+import {getCurrentPage, getFollowingInProgress, getPageSize, getTotalUsersCount,
+    getUsersFilter, getUsersPage} from "./usersSelectors";
 
-type UsersPropsType = {
-    totalUsersCount: number
-    pageSize: number
-    currentPage: number
-    followTC: (userId: number) => void
-    unfollowTC: (userId: number) => void
-    onPageChanged: (pageNumber: number) => void
-    onFilterChanged: (filter: FilterType) => void
-    usersPage: UserType[]
-    followingInProgress: Array<number>
-}
+export const Users = () => {
+    const totalUsersCount = useAppSelector(getTotalUsersCount)
+    const pageSize = useAppSelector(getPageSize)
+    const currentPage = useAppSelector(getCurrentPage)
+    const filter = useAppSelector(getUsersFilter)
+    const users = useAppSelector(getUsersPage)
+    const followingInProgress = useAppSelector(getFollowingInProgress)
 
-export const Users = ({
-                          usersPage,
-                          pageSize,
-                          currentPage,
-                          followingInProgress,
-                          followTC,
-                          onPageChanged,
-                          totalUsersCount,
-                          unfollowTC,
-                          onFilterChanged
-                      }: UsersPropsType) => {
+    const dispatch = useAppDispatch()
 
+    useEffect(()=>{
+        dispatch(getUsersThunkCreator(currentPage, pageSize, filter))
+    },[])
+
+    const onPageChanged = (pageNumber: number) => {
+        dispatch(getUsersThunkCreator(pageNumber, pageSize, filter))
+    }
+    const onFilterChanged = (filter: FilterType) => {
+        dispatch(getUsersThunkCreator(1, pageSize, filter))
+    }
+    const follow = (userId: number) => {
+        dispatch(followTC(userId))
+    }
+    const unfollow = (userId: number) => {
+        dispatch(unfollowTC(userId))
+    }
     return <div>
         <UsersSearchForm onFilterChanged={onFilterChanged}/>
         <Pagination totalItemsCount={totalUsersCount}
@@ -38,11 +42,11 @@ export const Users = ({
                     onPageChanged={onPageChanged}
         />
         {
-            usersPage.map(u =>
+            users.map(u =>
                 <User user={u}
                       followingInProgress={followingInProgress}
-                      followTC={followTC}
-                      unfollowTC={unfollowTC}
+                      follow={follow}
+                      unfollow={unfollow}
                       key={u.id}/>
             )
         }
