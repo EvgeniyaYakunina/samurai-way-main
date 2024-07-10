@@ -9,9 +9,9 @@ export const getAuthId=(state: AppStateType)=>{
 export const getEmail=(state: AppStateType)=>{
     return state.auth.email
 }
-export const getLogin=(state: AppStateType)=>{
+export const selectCurrentUserLogin=(state: AppStateType)=>{
     return state.auth.login
 }
-export const getIsAuth=(state: AppStateType)=>{
+export const selectIsAuth=(state: AppStateType)=>{
     return state.auth.isAuth
 }
