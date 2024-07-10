@@ -7,7 +7,7 @@ import {compose} from "redux";
 import {initializeAppTC} from "./redux/app-reducer";
 import {AppStateType, store} from "./redux/redux-store";
 import {Preloader} from "./common/Preloader/Preloader";
-import {UsersContainer} from "./Components/Users/UsersContainer";
+import {Users} from "./Components/Users/Users";
 import {withSuspense} from "./hoc/WithSuspense";
 import {RequestStatusType} from "./types/types";
 import {Header} from "./Components/Header/Header";
@@ -18,11 +18,11 @@ import {LaptopOutlined, NotificationOutlined, UserOutlined} from '@ant-design/ic
 
 const {SubMenu} = Menu
 const {Content, Footer, Sider} = Layout
-const DialogsContainer = React.lazy(() => import("./Components/Dialogs/DialogsContainer"))
+const Dialogs = React.lazy(() => import("./Components/Dialogs/Dialogs"))
 const ProfileContainer = React.lazy(() => import('./Components/Profile/ProfileContainer'))
 //не загружает компоненту сразу полностью,т.е сборщик не собирает ее в большой бандл,а когда понадобиться ее отрисовывать,
 //запрашивает ее у сервера,чтобы первый загрузочный файл не был таким большим и загружался быстрее
-const SuspendedDialogs = withSuspense(DialogsContainer)
+const SuspendedDialogs = withSuspense(Dialogs)
 const SuspendedProfile = withSuspense(ProfileContainer)
 type AppPropsType= MapStateToPropsType & MapDispatchToPropsType
 
@@ -85,7 +85,7 @@ type AppPropsType= MapStateToPropsType & MapDispatchToPropsType
                                       render={() => <SuspendedProfile/>}/>
 
                                <Route path='/users'
-                                      render={() => <UsersContainer //pageTitle={'Самураи'}
+                                      render={() => <Users //pageTitle={'Самураи'}
                                               />}/>
 
                                <Route path='/login'

@@ -5,15 +5,19 @@ import {User} from "./User";
 import {UsersSearchForm} from "./UsersSearchForm";
 import {FilterType, followTC, getUsersThunkCreator, unfollowTC} from "../../redux/users-reducer";
 import {useAppDispatch, useAppSelector} from "../../redux/redux-store";
-import {getCurrentPage, getFollowingInProgress, getPageSize, getTotalUsersCount, getUsersFilter,
-    getUsersPage} from "./usersSelectors";
+import {
+    getCurrentPage, getFollowingInProgress, getIsFetching, getPageSize, getTotalUsersCount, getUsersFilter,
+    getUsersPage
+} from "./usersSelectors";
 import {useHistory} from "react-router-dom"
 import queryString from 'query-string'
+import {Preloader} from "../../common/Preloader/Preloader";
 
 
 type QueryParamsType = { term?: string; page?: string; friend?: string }
 
 export const Users = () => {
+    const isFetching = useAppSelector(getIsFetching)
     const totalUsersCount = useAppSelector(getTotalUsersCount)
     const pageSize = useAppSelector(getPageSize)
     const currentPage = useAppSelector(getCurrentPage)
@@ -35,7 +39,7 @@ export const Users = () => {
 
         if (!!parsed.term) actualFilter = {...actualFilter, term: parsed.term as string}
 
-        switch(parsed.friend) {
+        switch (parsed.friend) {
             case "null":
                 actualFilter = {...actualFilter, friend: null}
                 break;
@@ -64,7 +68,6 @@ export const Users = () => {
     }, [filter, currentPage])
 
 
-
     const onPageChanged = (pageNumber: number) => {
         dispatch(getUsersThunkCreator(pageNumber, pageSize, filter))
     }
@@ -78,20 +81,22 @@ export const Users = () => {
         dispatch(unfollowTC(userId))
     }
     return <div>
-        <UsersSearchForm onFilterChanged={onFilterChanged}/>
-        <Pagination totalItemsCount={totalUsersCount}
-                    pageSize={pageSize}
-                    currentPage={currentPage}
-                    onPageChanged={onPageChanged}
-        />
-        {
-            users.map(u =>
-                <User user={u}
-                      followingInProgress={followingInProgress}
-                      follow={follow}
-                      unfollow={unfollow}
-                      key={u.id}/>
-            )
+        {isFetching ? <Preloader/> :
+           <div>
+               <UsersSearchForm onFilterChanged={onFilterChanged}/>
+               <Pagination totalItemsCount={totalUsersCount}
+                           pageSize={pageSize}
+                           currentPage={currentPage}
+                           onPageChanged={onPageChanged}
+               />
+               {users.map(u =>
+                   <User user={u}
+                         followingInProgress={followingInProgress}
+                         follow={follow}
+                         unfollow={unfollow}
+                         key={u.id}/>
+               )}
+           </div>
         }
-    </div>
+        </div>
 }
