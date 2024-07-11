@@ -4,7 +4,7 @@ import {createField, GetStringKeys, Input} from "../../common/FormsControls/Form
 import {required} from "../../utils/validators";
 import {loginTC} from "../../redux/auth-reducer";
 import {AppStateType, useAppDispatch, useAppSelector} from "../../redux/redux-store";
-import {Redirect} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 import s from './../../common/FormsControls/FormControls.module.css'
 
 type LoginFormValuesTypeKeys = GetStringKeys<FormDataType>
@@ -64,7 +64,7 @@ export const Login = () => {
     }
 
     if (isAuth) {
-        return <Redirect to={"/profile"}/>
+        return <Navigate to={"/profile"}/>
     }
 
     return <div>

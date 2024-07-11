@@ -6,30 +6,32 @@ import userPhoto from '../../../assets/images/userIcon.png'
 import {ProfileDataFormReduxForm} from "./ProfileDataForm";
 import {ProfileData} from "./ProfileData";
 import {ProfileType} from "../../../types/types";
+import {useAppDispatch, useAppSelector} from "../../../redux/redux-store";
+import {getProfile, getProfileStatus} from "../profileSelectors";
+import {savePhoto, saveProfile} from "../../../redux/profile-reducer";
 
 type ProfileInfoType={
-    profile: ProfileType
-    status: string
-    updateStatusTC: (status: string)=> void
     isOwner: boolean
-    savePhoto: (file: File) => void
-    saveProfile: (profile: ProfileType) => Promise<any>
 }
 
-export const ProfileInfo = ({profile, isOwner, status, updateStatusTC, savePhoto, saveProfile}: ProfileInfoType) => {
-    let [editMode, setEditMode] = useState(false);
+export const ProfileInfo = ({isOwner}: ProfileInfoType) => {
+    const profile = useAppSelector(getProfile)
+    const status = useAppSelector(getProfileStatus)
+    const dispatch = useAppDispatch()
 
-    if (!profile){
-        return <Preloader/>
-    }
+    let [editMode, setEditMode] = useState(false)
+
+    if (!profile){return <Preloader/>}
+
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length) {
-            savePhoto(e.target.files[0])
+            dispatch(savePhoto(e.target.files[0]))
         }
     }
     const onSubmit = (formData: ProfileType) => {
-        saveProfile(formData)
-            .then(() => {setEditMode(false)})
+        dispatch(saveProfile(formData))
+            // .then(() => {setEditMode(false)})
+           setEditMode(false)
     }
 
     return (
@@ -44,7 +46,9 @@ export const ProfileInfo = ({profile, isOwner, status, updateStatusTC, savePhoto
                     { editMode
                         ? <ProfileDataFormReduxForm initialValues={profile} profile={profile} onSubmit={onSubmit}/>
                         : <ProfileData goToEditMode={() => {setEditMode(true)} } profile={profile} isOwner={isOwner}/> }
-                    <ProfileStatus status={status} updateStatusTC={updateStatusTC}/>
+                    <ProfileStatus status={status}
+                                   // updateStatusTC={updateStatusTC}
+                    />
                 </div>
             </div>
         </div>

@@ -17,31 +17,31 @@ import ProfileStatusClass from "./ProfileStatus(classComponent)";
 
 describe("ProfileStatus Component", ()=>{
     test("status from props should be in the state", () => {
-        const component = create(<ProfileStatus status={"new status"} updateStatusTC={()=>{}}/>)
+        const component = create(<ProfileStatus status={"new status"}/>)
         const root = component.root
         expect(root.props.status).toBe("new status")
     })
     test("after creation span should be displayed with correct status", () => {
-        const component = create(<ProfileStatus status={"new status"} updateStatusTC={()=>{}}/>)
+        const component = create(<ProfileStatus status={"new status"}/>)
         const root = component.root
         let spans = root.findAllByType("span")
         expect(spans.length).toBe(1)
     })
     test("after creation span should contains correct status", () => {
-        const component = create(<ProfileStatus status={"new status"} updateStatusTC={()=>{}}/>)
+        const component = create(<ProfileStatus status={"new status"}/>)
         const root = component.root
         let spans = root.findByType("span")
         expect(spans.children[0]).toBe('new status')
     })
     test("after creation input cannot be displayed", () => {
-        const component = create(<ProfileStatus status={"new status"} updateStatusTC={()=>{}}/>)
+        const component = create(<ProfileStatus status={"new status"}/>)
         const root = component.root
         expect(()=>{
             let input = root.findByType("input")
         }).toThrow()
     })
     test("input should be displayed in editMode instead of span", () => {
-        const component = create(<ProfileStatus status={"new status"} updateStatusTC={()=>{}}/>)
+        const component = create(<ProfileStatus status={"new status"}/>)
         const root = component.root
         let spans = root.findByType("span")
         spans.props.onClick()

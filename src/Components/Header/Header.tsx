@@ -30,6 +30,7 @@ export const Header = () => {
                         <Avatar alt={login || ''} style={{backgroundColor: '#87d068'}} icon={<UserOutlined/>}/>
                     </Col>
                         <Col span={5}>
+                            <span style={{color: 'white'}}>{login}</span>
                             <Button onClick={logoutHandler}>Log out</Button>
                         </Col>
                     </>

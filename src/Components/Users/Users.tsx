@@ -9,8 +9,7 @@ import {
     getCurrentPage, getFollowingInProgress, getIsFetching, getPageSize, getTotalUsersCount, getUsersFilter,
     getUsersPage
 } from "./usersSelectors";
-import {useHistory} from "react-router-dom"
-import queryString from 'query-string'
+import {Navigate, useSearchParams } from "react-router-dom"
 import {Preloader} from "../../common/Preloader/Preloader";
 
 
@@ -25,20 +24,18 @@ export const Users = () => {
     const users = useAppSelector(getUsersPage)
     const followingInProgress = useAppSelector(getFollowingInProgress)
 
-    const history = useHistory()
     const dispatch = useAppDispatch()
 
+    const [searchParams, setSearchParams] = useSearchParams()
+
     useEffect(() => {
-        const parsed = queryString.parse(history.location.search.substr(1)) as QueryParamsType
+        const parsed = Object.fromEntries(searchParams.entries()) as QueryParamsType
 
         let actualPage = currentPage
         let actualFilter = filter
 
         if (!!parsed.page) actualPage = Number(parsed.page)
-
-
         if (!!parsed.term) actualFilter = {...actualFilter, term: parsed.term as string}
-
         switch (parsed.friend) {
             case "null":
                 actualFilter = {...actualFilter, friend: null}
@@ -60,11 +57,8 @@ export const Users = () => {
         if (!!filter.term) query.term = filter.term
         if (filter.friend !== null) query.friend = String(filter.friend)
         if (currentPage !== 1) query.page = String(currentPage)
-
-        history.push({
-            pathname: '/users',
-            search: queryString.stringify(query)
-        })
+        setSearchParams(query);
+        // <Navigate to='/users'/>
     }, [filter, currentPage])
 
 
