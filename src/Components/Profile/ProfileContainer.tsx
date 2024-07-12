@@ -6,7 +6,7 @@ import {getAuthorizedUserId, getIsAuth} from "./profileSelectors";
 import {withAuthRedirect} from "../../hoc/AuthRedirect";
 import { Navigate } from "react-router-dom"
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
-import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
+import {MyPosts} from "./MyPosts/MyPosts";
 
 const ProfileContainer = () => {
     const authorizedUserId = useAppSelector(getAuthorizedUserId)
@@ -27,9 +27,8 @@ const ProfileContainer = () => {
     if (!isAuth) return <Navigate to="/login"/>
     return (
         <div>
-            {/*<Profile isOwner={isOwner}/>*/}
             <ProfileInfo isOwner={isOwner}/>
-            <MyPostsContainer/>
+            <MyPosts/>
         </div>
     )
 }

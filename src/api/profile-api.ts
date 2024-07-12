@@ -1,4 +1,4 @@
-import {BaseResponseType, PhotosType, ProfileType, SavePhotoResponseDataType} from "../types/types";
+import {BaseResponseType, ProfileType, SavePhotoResponseDataType} from "../types/types";
 import {instance} from "./api";
 
 export const profileAPI={

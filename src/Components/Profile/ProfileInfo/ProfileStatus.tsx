@@ -1,11 +1,9 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
-import {useDispatch} from "react-redux";
 import {updateStatusTC} from "../../../redux/profile-reducer";
 import {useAppDispatch} from "../../../redux/redux-store";
 
 export type ProfileStatusType = {
     status: string
-    // updateStatusTC: (status: string) => void
 }
 
 export const ProfileStatus = (props: ProfileStatusType) => {

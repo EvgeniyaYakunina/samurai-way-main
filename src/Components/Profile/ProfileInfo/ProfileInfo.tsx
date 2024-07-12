@@ -30,7 +30,6 @@ export const ProfileInfo = ({isOwner}: ProfileInfoType) => {
     }
     const onSubmit = (formData: ProfileType) => {
         dispatch(saveProfile(formData))
-            // .then(() => {setEditMode(false)})
            setEditMode(false)
     }
 
@@ -46,9 +45,7 @@ export const ProfileInfo = ({isOwner}: ProfileInfoType) => {
                     { editMode
                         ? <ProfileDataFormReduxForm initialValues={profile} profile={profile} onSubmit={onSubmit}/>
                         : <ProfileData goToEditMode={() => {setEditMode(true)} } profile={profile} isOwner={isOwner}/> }
-                    <ProfileStatus status={status}
-                                   // updateStatusTC={updateStatusTC}
-                    />
+                    <ProfileStatus status={status}/>
                 </div>
             </div>
         </div>

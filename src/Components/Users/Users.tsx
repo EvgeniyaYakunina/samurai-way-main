@@ -9,9 +9,8 @@ import {
     getCurrentPage, getFollowingInProgress, getIsFetching, getPageSize, getTotalUsersCount, getUsersFilter,
     getUsersPage
 } from "./usersSelectors";
-import {Navigate, useSearchParams } from "react-router-dom"
+import {Navigate, useSearchParams} from "react-router-dom"
 import {Preloader} from "../../common/Preloader/Preloader";
-
 
 type QueryParamsType = { term?: string; page?: string; friend?: string }
 
@@ -57,8 +56,8 @@ export const Users = () => {
         if (!!filter.term) query.term = filter.term
         if (filter.friend !== null) query.friend = String(filter.friend)
         if (currentPage !== 1) query.page = String(currentPage)
-        setSearchParams(query);
-        // <Navigate to='/users'/>
+        setSearchParams(query)
+
     }, [filter, currentPage])
 
 
@@ -74,23 +73,24 @@ export const Users = () => {
     const unfollow = (userId: number) => {
         dispatch(unfollowTC(userId))
     }
+
     return <div>
         {isFetching ? <Preloader/> :
-           <div>
-               <UsersSearchForm onFilterChanged={onFilterChanged}/>
-               <Pagination totalItemsCount={totalUsersCount}
-                           pageSize={pageSize}
-                           currentPage={currentPage}
-                           onPageChanged={onPageChanged}
-               />
-               {users.map(u =>
-                   <User user={u}
-                         followingInProgress={followingInProgress}
-                         follow={follow}
-                         unfollow={unfollow}
-                         key={u.id}/>
-               )}
-           </div>
+            <div>
+                <UsersSearchForm onFilterChanged={onFilterChanged}/>
+                <Pagination totalItemsCount={totalUsersCount}
+                            pageSize={pageSize}
+                            currentPage={currentPage}
+                            onPageChanged={onPageChanged}
+                />
+                {users.map(u =>
+                    <User user={u}
+                          followingInProgress={followingInProgress}
+                          follow={follow}
+                          unfollow={unfollow}
+                          key={u.id}/>
+                )}
+            </div>
         }
-        </div>
+    </div>
 }
