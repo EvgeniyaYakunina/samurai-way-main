@@ -14,13 +14,15 @@ import {Breadcrumb, Layout, Menu} from 'antd'
 import {LaptopOutlined, NotificationOutlined, UserOutlined} from '@ant-design/icons'
 const {SubMenu} = Menu
 const {Content, Footer, Sider} = Layout
+
 const Dialogs = React.lazy(() => import("./Components/Dialogs/Dialogs"))
 const ProfileContainer = React.lazy(() => import('./Components/Profile/ProfileContainer'))
+const ChatPage = React.lazy(() => import('./pages/ChatPage'))
 //не загружает компоненту сразу полностью,т.е сборщик не собирает ее в большой бандл,а когда понадобиться ее отрисовывать,
 //запрашивает ее у сервера,чтобы первый загрузочный файл не был таким большим и загружался быстрее
 const SuspendedDialogs = withSuspense(Dialogs)
 const SuspendedProfile = withSuspense(ProfileContainer)
-
+const SuspendedChatPage = withSuspense(ChatPage)
 
 export const App = () => {
 
@@ -76,7 +78,7 @@ export const App = () => {
 
                         <Routes>
                             <Route path='/'
-                                   element={<Navigate replace to={'/profile'}/>}/>
+                                   element={ <Navigate to={'/profile'}/>}/>
 
                             <Route path='/dialogs'
                                    element={<SuspendedDialogs/>}/>
@@ -85,16 +87,16 @@ export const App = () => {
                                    element={<SuspendedProfile/>}/>
 
                             <Route path='/users'
-                                   element={<Users/>}/>
+                                   element={ <Users/>}/>
 
                             <Route path='/login'
-                                   element={<Login/>}/>
+                                   element={ <Login/>}/>
 
-                            {/*<Route path='/chat'*/}
-                            {/*       render={() => <SuspendedChatPage/>}/>*/}
+                            <Route path='/chat'
+                                   element={<SuspendedChatPage/>}/>
 
                             <Route path='*'
-                                   element={<div>404 NOT FOUND</div>}/>
+                                   element={ <div>404 NOT FOUND</div>}/>
                         </Routes>
 
                     </Content>
@@ -104,6 +106,8 @@ export const App = () => {
         </Layout>
     )
 }
+
+// export default withAuthRedirect(App)
 
 export const SamuraiJSApp = () => {
     return <BrowserRouter>

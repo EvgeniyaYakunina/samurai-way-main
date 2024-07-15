@@ -9,6 +9,7 @@ import {reducer as formReducer} from "redux-form";
 import {appReducer} from "./app-reducer";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {ActionsTypes} from "../types/types";
+import chatReducer from "./chat-reducer";
 
 
  let rootReducer = combineReducers({
@@ -18,7 +19,8 @@ import {ActionsTypes} from "../types/types";
      sidebar: sidebarReducer,
      auth: authReducer,
      form: formReducer,
-     app: appReducer
+     app: appReducer,
+     chat: chatReducer,
 });
 
 declare global {
